@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CzyDojade", "CzyDojade\CzyDojade.csproj", "{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F2FA9BD-B51C-41F9-B3D3-C7D7595044FC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E39501AA-96C7-4EB2-B9BD-512AE1696650}
+	EndGlobalSection
+EndGlobal
