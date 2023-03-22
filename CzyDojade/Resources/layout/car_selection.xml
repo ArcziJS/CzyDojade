@@ -3,36 +3,49 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:minWidth="25px"
-    android:minHeight="25px"
+    android:minWidth="25dp"
+    android:minHeight="25dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/relativeLayout1">
-        <ImageView
-            android:src="@android:drawable/ic_menu_gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView1" />
+    android:id="@+id/relativeLayout1"
+    android:background="@color/colorBackground">
+
+    <ImageView
+        android:src="@drawable/autko"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView1"
+        android:contentDescription="@string/description" 
+            />
         <TextView
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp"
+            android:textAppearance="?android:attr/textAppearanceLarge"   
+            android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageView1"
+            android:paddingLeft="10dp"
             android:id="@+id/textView1"
-            android:paddingTop="4sp" />
+            android:paddingTop="4dp" />
         <TextView
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+            android:textAppearance="?android:attr/textAppearanceMedium"  
+            android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageView1"
-            android:id="@+id/textView2"
-            android:paddingTop="30sp" />
+            android:layout_below="@id/textView1"
+            android:paddingLeft="10dp"
+            android:id="@+id/textView2"/>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wybierz"
+            android:id="@+id/getBackButton"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:background="@color/colorAccent"
             android:layout_alignParentRight="true"
-            android:id="@+id/getBackButton"/>
+            android:text="@string/button_select"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
 </RelativeLayout>

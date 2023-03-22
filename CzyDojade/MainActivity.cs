@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 
@@ -16,7 +15,7 @@ namespace CzyDojade
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.main_screen);
-            
+
             ImageButton selectCarButton = FindViewById<ImageButton>(Resource.Id.SelectCarButton);
             selectCarButton.Click += delegate
             {

@@ -2,4 +2,5 @@
     <string name="app_name">CzyDojade</string>
     <string name="action_settings">Settings</string>
 	<string name="description">Description</string>
+	<string name="button_select">Select</string>
 </resources>
