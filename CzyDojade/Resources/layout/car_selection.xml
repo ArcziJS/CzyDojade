@@ -18,7 +18,6 @@
         android:contentDescription="@string/description" 
             />
         <TextView
-            android:text="Large Text"
             android:textSize="30sp"
             android:textAppearance="?android:attr/textAppearanceLarge"   
             android:textColor="@color/colorWhite"
@@ -29,7 +28,6 @@
             android:id="@+id/textView1"
             android:paddingTop="4dp" />
         <TextView
-            android:text="Medium Text"
             android:textSize="20sp"
             android:textAppearance="?android:attr/textAppearanceMedium"  
             android:textColor="@color/colorWhite"
