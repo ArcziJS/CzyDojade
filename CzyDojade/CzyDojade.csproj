@@ -66,6 +66,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Car.cs" />
     <Compile Include="CarSelector.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -116,7 +117,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\main_screen.xml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\autko.png" />
   </ItemGroup>
