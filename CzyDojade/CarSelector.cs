@@ -183,8 +183,6 @@ namespace CzyDojade
 
             #endregion
 
-            ImageView image = FindViewById<ImageView>(Resource.Id.imageView1);
-
             connection.Close();
         }
     }

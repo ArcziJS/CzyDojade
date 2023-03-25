@@ -15,10 +15,10 @@ namespace CzyDojade
 {
     internal class Car
     {
-        int id;
-        string producer;
-        string model;
-        string range;
+        int id = 11;
+        string producer = "My own";
+        string model = "car";
+        string range = "???";
         string url;
         /// <summary>
         /// Create a new car object with atributes fetched from database.
@@ -29,22 +29,24 @@ namespace CzyDojade
         {
 
 
+            if (carId < 11)
+            {
+                var query = connection.CreateCommand();
+                string queryString = "SELECT * FROM samochody where id=" + carId;
+                query.CommandText = queryString;
 
-            var query = connection.CreateCommand();
-            string queryString = "SELECT * FROM samochody where id=" + carId;
-            query.CommandText = queryString;
+                var result = query.ExecuteReader();
 
-            var result = query.ExecuteReader();
+                result.Read();
 
-            result.Read();
+                this.id = carId;
+                this.producer = result.GetString("marka").ToString();
+                this.model = result.GetString("model").ToString();
+                this.range = result.GetString("zasieg").ToString();
+                //this.url = result.GetString("obrazek").ToString();
 
-            this.id = carId;
-            this.producer = result.GetString("marka").ToString();
-            this.model = result.GetString("model").ToString();
-            this.range = result.GetString("zasieg").ToString();
-            //this.url = result.GetString("obrazek").ToString();
-
-            result.Close();
+                result.Close();
+            }
         }
 
         public int GetId() { return id; }

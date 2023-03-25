@@ -16,8 +16,8 @@
                 android:id="@+id/imageView1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/tesla_model_s_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
                     android:id="@+id/textViewCar1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -39,11 +40,14 @@
                     android:textSize="16sp"
                     android:textColor="@color/colorWhite"/>
             </LinearLayout>
-                <Button
-                    android:id="@+id/buttonSelectCar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_select"/>
+            <Button
+                android:id="@+id/buttonSelectCar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorButtonBackground"
+                android:textColor="@color/colorButtonText"
+                android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,8 +59,8 @@
                 android:id="@+id/imageView2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/tesla_model_3_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,6 +72,7 @@
                     android:id="@+id/textViewCar2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -82,6 +87,9 @@
                     android:id="@+id/buttonSelectCar2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -94,8 +102,8 @@
                 android:id="@+id/imageView3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/tesla_model_x_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,6 +115,7 @@
                     android:id="@+id/textViewCar3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -121,6 +130,9 @@
                     android:id="@+id/buttonSelectCar3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"                
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -133,8 +145,8 @@
                 android:id="@+id/imageView4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/tesla_model_y_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -146,6 +158,7 @@
                     android:id="@+id/textViewCar4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -160,6 +173,9 @@
                     android:id="@+id/buttonSelectCar4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -172,8 +188,8 @@
                 android:id="@+id/imageView5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/ford_mustang_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -199,6 +215,9 @@
                     android:id="@+id/buttonSelectCar5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -211,8 +230,8 @@
                 android:id="@+id/imageView6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/audi_etron_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -224,6 +243,7 @@
                     android:id="@+id/textViewCar6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -238,6 +258,9 @@
                     android:id="@+id/buttonSelectCar6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -250,8 +273,8 @@
                 android:id="@+id/imageView7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/porsche_taycan_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -263,6 +286,7 @@
                     android:id="@+id/textViewCar7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -277,6 +301,9 @@
                     android:id="@+id/buttonSelectCar7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -289,8 +316,8 @@
                 android:id="@+id/imageView8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/nissan_leaf_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -302,6 +329,7 @@
                     android:id="@+id/textViewCar8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -316,6 +344,9 @@
                     android:id="@+id/buttonSelectCar8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -328,8 +359,8 @@
                 android:id="@+id/imageView9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/hyundai_kona_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -341,6 +372,7 @@
                     android:id="@+id/textViewCar9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -355,6 +387,9 @@
                     android:id="@+id/buttonSelectCar9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -367,8 +402,8 @@
                 android:id="@+id/imageView10"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/reanult_zoe_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -380,6 +415,7 @@
                     android:id="@+id/textViewCar10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -394,6 +430,9 @@
                     android:id="@+id/buttonSelectCar10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
         <LinearLayout
@@ -406,8 +445,8 @@
                 android:id="@+id/imageView11"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/autko"
-                android:scaleType="centerCrop"
+                android:src="@drawable/frame_outline"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -419,6 +458,7 @@
                     android:id="@+id/textViewCar11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -433,6 +473,9 @@
                     android:id="@+id/buttonSelectCar11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorButtonBackground"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/button_select"/>
         </LinearLayout>
     </LinearLayout>
