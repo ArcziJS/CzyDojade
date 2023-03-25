@@ -71,7 +71,7 @@ namespace CzyDojade
             #endregion
 
             #region Cars
-            
+
             Car Car1 = new Car(connection, 1);
             Car Car2 = new Car(connection, 2);
             Car Car3 = new Car(connection, 3);

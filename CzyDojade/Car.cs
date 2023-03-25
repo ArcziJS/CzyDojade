@@ -1,15 +1,4 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Java.Security;
-using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MySqlConnector;
 
 namespace CzyDojade
 {
@@ -19,7 +8,6 @@ namespace CzyDojade
         string producer = "My own";
         string model = "car";
         string range = "???";
-        string url;
         /// <summary>
         /// Create a new car object with atributes fetched from database.
         /// </summary>
@@ -43,7 +31,6 @@ namespace CzyDojade
                 this.producer = result.GetString("marka").ToString();
                 this.model = result.GetString("model").ToString();
                 this.range = result.GetString("zasieg").ToString();
-                //this.url = result.GetString("obrazek").ToString();
 
                 result.Close();
             }
@@ -53,7 +40,6 @@ namespace CzyDojade
         public string GetProducer() { return producer; }
         public string GetModel() { return model; }
         public string GetRange() { return range; }
-        public string GetUrl() { return url; }
 
     }
 }
