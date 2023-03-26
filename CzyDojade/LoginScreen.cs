@@ -13,6 +13,7 @@ namespace CzyDojade
         {
             base.OnCreate(savedInstanceState);
 
+            SetContentView(Resource.Layout.login_screen);
             #region SQL Connect
 
             MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");

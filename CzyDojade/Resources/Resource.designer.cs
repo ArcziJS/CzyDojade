@@ -4551,7 +4551,7 @@ namespace CzyDojade
 			public const int design_text_input_password_icon = 2131427373;
 			
 			// aapt resource value: 0x7F0B002E
-			public const int LoginScreen = 2131427374;
+			public const int login_screen = 2131427374;
 			
 			// aapt resource value: 0x7F0B002F
 			public const int main_screen = 2131427375;

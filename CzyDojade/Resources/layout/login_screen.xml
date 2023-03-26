@@ -30,10 +30,11 @@
         <EditText
             android:inputType="textPassword"
             android:layout_width="250.5dp"
-            android:layout_height="match_parent"
+            android:layout_height="20dp"
             android:id="@+id/editText2"
             android:layout_marginLeft="42.0dp"
-            android:layout_marginTop="5.0dp" />
+            android:textColorHighlight="@android:color/white"
+            android:layout_marginTop="5.0dp"/>
 
     </LinearLayout>
     <LinearLayout
@@ -52,10 +53,12 @@
         <EditText
             android:inputType="textPassword"
             android:layout_width="250.5dp"
-            android:layout_height="match_parent"
+            android:layout_height="20dp"
             android:id="@+id/editText3"
             android:layout_marginLeft="42.0dp"
+            android:textColor="@android:color/white"
             android:layout_marginTop="5.0dp" />
+        
 
     </LinearLayout>
 
