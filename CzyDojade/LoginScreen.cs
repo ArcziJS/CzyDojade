@@ -27,7 +27,7 @@ namespace CzyDojade
             Button ButtonLogin3 = FindViewById<Button>(Resource.Id.ButtonLogin3);
             #endregion
 
-            //#region Functionality of Buttons
+            #region Functionality of Buttons
             //ButtonLogin.Click += delegate
             //{
             //    StartActivity(typeof(MainActivity)); //tu daniel uwaga, jak zrobisz ekran główny to tu zmień  
@@ -40,7 +40,8 @@ namespace CzyDojade
             //{
             //    StartActivity(typeof(MainActivity));
             //};
-            //#endregion
+            #endregion
+
         }
     }
 }

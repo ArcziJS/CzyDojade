@@ -82,7 +82,7 @@
     <Button
         android:id="@+id/ButtonLogin1"
         android:text="@string/button_Login"
-        android:background="@color/colorButtonBackground"
+        android:background="@color/colorWhite"
         android:textColor="@color/colorButtonText"
         android:layout_width="371.0dp"
         android:layout_height="43.0dp"
