@@ -1,24 +1,30 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CzyDojade
 {
-    [Activity(Label = "Activity1")]
+    [Activity(Label = "RegisterScreen")]
     public class RegisterScreen : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your application here
+            SetContentView(Resource.Layout.register_screen);
+
+            #region Buttons
+            Button ButtonRegister = FindViewById<Button>(Resource.Id.ButtonRegister);
+            Button ButtonRegister2 = FindViewById<Button>(Resource.Id.ButtonRegister2);
+            #endregion
+
+            #region Functionality of Buttons
+            ButtonRegister2.Click += delegate
+            {
+                StartActivity(typeof(LoginScreen)); 
+            };
+            #endregion
+
         }
     }
 }

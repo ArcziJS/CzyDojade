@@ -6,4 +6,11 @@
 	<string name="button_Login">Login</string>
 	<string name="button_Login2">Zarejestruj się</string>
 	<string name="button_Login3">Przywróć hasło</string>
+	<string name="button_register">Załóż konto</string>
+	<string name="button_register2">Masz już konto? Zaloguj się</string>
+	<string name="button_register3">Zarejestruj się</string>
+	<string name="hint_email">E-mail</string>
+	<string name="hint_username">Nazwa użytkownika</string>
+	<string name="hint_password">Hasło</string>
+	<string name="hint_password_confirm">Potwierdź hasło</string>
 </resources>

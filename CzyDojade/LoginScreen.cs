@@ -32,10 +32,10 @@ namespace CzyDojade
             //{
             //    StartActivity(typeof(MainActivity)); //tu daniel uwaga, jak zrobisz ekran główny to tu zmień  
             //};
-            //ButtonLogin2.Click += delegate
-            //{
-            //    StartActivity(typeof(MainActivity)); //tu kamil uwaga, jak zrobisz ekran rejestracji to tu zmień  
-            //};
+            ButtonLogin2.Click += delegate
+            {
+                StartActivity(typeof(RegisterScreen)); //tu kamil uwaga, jak zrobisz ekran rejestracji to tu zmień  
+            };
             //ButtonLogin3.Click += delegate
             //{
             //    StartActivity(typeof(MainActivity));
