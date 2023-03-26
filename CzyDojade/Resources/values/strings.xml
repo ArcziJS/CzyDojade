@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
 	<string name="description">Description</string>
 	<string name="button_select">Select</string>
+	<string name="button_Login">Login</string>
+	<string name="button_Login2">Zarejestruj się</string>
+	<string name="button_Login3">Przywróć hasło</string>
 </resources>

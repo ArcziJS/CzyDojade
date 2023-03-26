@@ -1,0 +1,87 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="385dp"
+        android:layout_height="275dp"
+        android:src="@drawable/Logo"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/description" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@color/colorBackground">
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="24.0dp"
+            android:layout_height="24.0dp"
+            android:src="@drawable/evelope"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/description" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="250.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/editText2"
+            android:layout_marginLeft="42.0dp"
+            android:layout_marginTop="5.0dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@color/colorBackground">
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="24.0dp"
+            android:layout_height="24.0dp"
+            android:src="@drawable/lock"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/description" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="250.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/editText3"
+            android:layout_marginLeft="42.0dp"
+            android:layout_marginTop="5.0dp" />
+
+    </LinearLayout>
+
+
+
+
+    <Button
+        android:id="@+id/ButtonLogin3"
+        android:text="@string/button_Login3"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.0dp"
+        android:layout_marginLeft="100dp" />
+    <Button
+        android:id="@+id/ButtonLogin2"
+        android:text="@string/button_Login2"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.0dp"
+        android:layout_marginLeft="100dp" />
+    <Button
+        android:id="@+id/ButtonLogin1"
+        android:text="@string/button_Login"
+        android:layout_width="371.0dp"
+        android:layout_height="43.0dp"
+        android:layout_marginTop="55.5dp"
+        android:layout_marginLeft="7.0dp" />
+    
+</LinearLayout>

@@ -19,8 +19,9 @@ namespace CzyDojade
             ImageButton selectCarButton = FindViewById<ImageButton>(Resource.Id.SelectCarButton);
             selectCarButton.Click += delegate
             {
-                StartActivity(typeof(CarSelector));
+                StartActivity(typeof(LoginScreen));
             };
+            
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
