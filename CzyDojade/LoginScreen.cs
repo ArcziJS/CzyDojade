@@ -40,7 +40,6 @@ namespace CzyDojade
             //{
             //    StartActivity(typeof(MainActivity));
             //};
-
             //#endregion
         }
     }

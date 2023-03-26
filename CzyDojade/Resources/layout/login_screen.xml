@@ -61,13 +61,11 @@
         
 
     </LinearLayout>
-
-
-
-
     <Button
         android:id="@+id/ButtonLogin3"
         android:text="@string/button_Login3"
+        android:background="@color/colorButtonBackground"
+        android:textColor="@color/colorButtonText"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="0.0dp"
@@ -75,6 +73,8 @@
     <Button
         android:id="@+id/ButtonLogin2"
         android:text="@string/button_Login2"
+        android:background="@color/colorButtonBackground"
+        android:textColor="@color/colorButtonText"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="0.0dp"
@@ -82,6 +82,8 @@
     <Button
         android:id="@+id/ButtonLogin1"
         android:text="@string/button_Login"
+        android:background="@color/colorButtonBackground"
+        android:textColor="@color/colorButtonText"
         android:layout_width="371.0dp"
         android:layout_height="43.0dp"
         android:layout_marginTop="55.5dp"
