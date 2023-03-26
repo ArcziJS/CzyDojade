@@ -128,57 +128,57 @@ namespace CzyDojade
 
             ButtonSelectCar1.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar2.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar3.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar4.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar5.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar6.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar7.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar8.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar9.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar10.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             ButtonSelectCar11.Click += delegate
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(MapScreen));
             };
 
             #endregion

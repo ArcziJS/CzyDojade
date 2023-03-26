@@ -25,16 +25,21 @@ namespace CzyDojade
             Button ButtonLogin = FindViewById<Button>(Resource.Id.ButtonLogin1);
             Button ButtonLogin2 = FindViewById<Button>(Resource.Id.ButtonLogin2);
             Button ButtonLogin3 = FindViewById<Button>(Resource.Id.ButtonLogin3);
+            Button ButtonLogin6 = FindViewById<Button>(Resource.Id.ButtonLogin6);
             #endregion
 
             #region Functionality of Buttons
-            //ButtonLogin.Click += delegate
-            //{
-            //    StartActivity(typeof(MainActivity)); //tu daniel uwaga, jak zrobisz ekran główny to tu zmień  
-            //};
+            ButtonLogin.Click += delegate
+            {
+                StartActivity(typeof(MapScreen));  
+            };
             ButtonLogin2.Click += delegate
             {
-                StartActivity(typeof(RegisterScreen)); //tu kamil uwaga, jak zrobisz ekran rejestracji to tu zmień  
+                StartActivity(typeof(RegisterScreen));  
+            };
+            ButtonLogin6.Click += delegate
+            {
+                StartActivity(typeof(CarSelector));
             };
             //ButtonLogin3.Click += delegate
             //{

@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:minWidth="25px"
     android:minHeight="25px">
     <ImageButton
-        android:src="@drawable/autko"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:src="@drawable/minilogoo"
+        android:background="@color/colorBackground"
+        android:layout_width="500000dp"
+        android:layout_height="500000dp"
         android:id="@+id/SelectCarButton"
         android:contentDescription="@string/description" />
 </RelativeLayout>

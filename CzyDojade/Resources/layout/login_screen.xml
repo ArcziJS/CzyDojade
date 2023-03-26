@@ -84,6 +84,16 @@
         android:layout_marginTop="0.0dp"
         android:layout_marginLeft="100dp" />
     <Button
+        android:id="@+id/ButtonLogin6"
+        android:text="@string/button_Login6"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:background="@color/colorBackground"
+        android:textColor="@color/colorButtonText"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.0dp"
+        android:layout_marginLeft="100dp" />
+    <Button
         android:id="@+id/ButtonLogin1"
         android:text="@string/button_Login"
         android:background="@color/colorAccent"

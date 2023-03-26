@@ -23,6 +23,10 @@ namespace CzyDojade
             {
                 StartActivity(typeof(LoginScreen)); 
             };
+            ButtonRegister.Click += delegate
+            {
+                StartActivity(typeof(MapScreen));
+            };
             #endregion
 
         }
