@@ -28,13 +28,14 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/description" />
         <EditText
-            android:inputType="textPassword"
-            android:layout_width="250.5dp"
-            android:layout_height="20dp"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:layout_marginLeft="42.0dp"
-            android:textColorHighlight="@android:color/white"
-            android:layout_marginTop="5.0dp"/>
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/colorButtonText"
+            android:textColorHint="@android:color/darker_gray"
+            android:hint="@string/hint_email"/>
 
     </LinearLayout>
     <LinearLayout
@@ -51,20 +52,22 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/description" />
         <EditText
-            android:inputType="textPassword"
-            android:layout_width="250.5dp"
-            android:layout_height="20dp"
-            android:id="@+id/editText3"
-            android:layout_marginLeft="42.0dp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="5.0dp" />
+            android:id="@+id/login_Password"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/colorButtonText"
+            android:textColorHint="@android:color/darker_gray"
+            android:hint="@string/hint_password" />
         
 
     </LinearLayout>
     <Button
         android:id="@+id/ButtonLogin3"
         android:text="@string/button_Login3"
-        android:background="@color/colorButtonBackground"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:background="@color/colorBackground"
         android:textColor="@color/colorButtonText"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
@@ -73,7 +76,8 @@
     <Button
         android:id="@+id/ButtonLogin2"
         android:text="@string/button_Login2"
-        android:background="@color/colorButtonBackground"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:background="@color/colorBackground"
         android:textColor="@color/colorButtonText"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
@@ -82,7 +86,7 @@
     <Button
         android:id="@+id/ButtonLogin1"
         android:text="@string/button_Login"
-        android:background="@color/colorWhite"
+        android:background="@color/colorAccent"
         android:textColor="@color/colorButtonText"
         android:layout_width="371.0dp"
         android:layout_height="43.0dp"
