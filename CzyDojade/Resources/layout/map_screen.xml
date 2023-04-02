@@ -11,13 +11,6 @@
        android:layout_weight="1"
        android:scaleType="centerCrop"
        android:src="@drawable/map" />
-    <EditText
-       android:id="@+id/search"
-       android:background="@color/colorAccent"
-       android:textColor="@color/colorButtonText"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:hint="Wyszukaj"
-       android:padding="16dp" />
+    
 
 </LinearLayout>
