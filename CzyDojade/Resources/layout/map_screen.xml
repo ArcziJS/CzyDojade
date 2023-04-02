@@ -1,16 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   android:orientation="vertical">
 
- 
-   <ImageView
-       android:id="@+id/mapImage"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_weight="1"
-       android:scaleType="centerCrop"
-       android:src="@drawable/map" />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   
+         
+    <ImageView
+        android:id="@+id/mapImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="MAPA"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/map" />
     
-
+     <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView 
+            android:text="Wpisz tekst:"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText 
+            android:id="@+id/Search_MAP"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button 
+            android:text="Zapisz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
 </LinearLayout>
