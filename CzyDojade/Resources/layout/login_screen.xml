@@ -28,11 +28,11 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/description" />
         <EditText
-            android:inputType="textEmailAddress"
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
             android:layout_marginLeft="16dp"
+            android:inputType="text"
             android:textColor="@color/colorButtonText"
             android:textColorHint="@android:color/darker_gray"
             android:hint="@string/hint_email"/>
@@ -52,8 +52,8 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/description" />
         <EditText
-            android:id="@+id/login_Password"
-            android:inputType="textEmailAddress"
+            android:id="@+id/Password"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
