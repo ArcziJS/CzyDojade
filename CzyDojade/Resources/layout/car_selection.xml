@@ -16,7 +16,6 @@
                 android:id="@+id/imageView1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/tesla_model_s_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description" />
             <LinearLayout
@@ -47,7 +46,8 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/colorButtonBackground"
                 android:textColor="@color/colorButtonText"
-                android:text="@string/button_select"/>
+                android:text="@string/button_select"
+                android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +59,6 @@
                 android:id="@+id/imageView2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/tesla_model_3_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description" />
             <LinearLayout
@@ -90,7 +89,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +102,6 @@
                 android:id="@+id/imageView3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/tesla_model_x_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -133,7 +132,8 @@
                     android:layout_marginTop="20dp"                
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,7 +145,6 @@
                 android:id="@+id/imageView4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/tesla_model_y_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -176,7 +175,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -188,7 +188,6 @@
                 android:id="@+id/imageView5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ford_mustang_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -218,7 +217,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -230,7 +230,6 @@
                 android:id="@+id/imageView6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/audi_etron_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -261,7 +260,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -273,7 +273,6 @@
                 android:id="@+id/imageView7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/porsche_taycan_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -304,7 +303,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -316,7 +316,6 @@
                 android:id="@+id/imageView8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/nissan_leaf_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -347,7 +346,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -359,7 +359,6 @@
                 android:id="@+id/imageView9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/hyundai_kona_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -390,7 +389,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -402,7 +402,6 @@
                 android:id="@+id/imageView10"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/reanult_zoe_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -433,7 +432,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -445,7 +445,6 @@
                 android:id="@+id/imageView11"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/frame_outline"
                 android:scaleType="fitCenter"
                 android:contentDescription="@string/description"/>
             <LinearLayout
@@ -476,7 +475,8 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/colorButtonBackground"
                     android:textColor="@color/colorButtonText"
-                    android:text="@string/button_select"/>
+                    android:text="@string/button_select"
+                    android:visibility="invisible"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

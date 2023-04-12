@@ -8,6 +8,7 @@ namespace CzyDojade
         string producer = "My own";
         string model = "car";
         string range = "???";
+        int icon = Resource.Drawable.frame_outline;
         /// <summary>
         /// Create a new car object with atributes fetched from database.
         /// </summary>
@@ -31,6 +32,7 @@ namespace CzyDojade
                 this.producer = result.GetString("marka").ToString();
                 this.model = result.GetString("model").ToString();
                 this.range = result.GetString("zasieg").ToString();
+                this.icon = result.GetInt32("ikona");
 
                 result.Close();
             }
@@ -40,6 +42,8 @@ namespace CzyDojade
         public string GetProducer() { return producer; }
         public string GetModel() { return model; }
         public string GetRange() { return range; }
+
+        public int GetIcon() { return icon; }
 
     }
 }
