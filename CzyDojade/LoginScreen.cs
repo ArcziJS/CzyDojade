@@ -33,10 +33,10 @@ namespace CzyDojade
             #endregion
 
             #region Functionality of Buttons
-            //ButtonLogin.Click += delegate
-            //{
-            //    StartActivity(typeof(MapScreen));  
-            //};
+            ButtonLogin.Click += delegate
+            {
+                StartActivity(typeof(MapScreen));
+            };
 
             ButtonLogin.Click += delegate
             {
@@ -54,31 +54,13 @@ namespace CzyDojade
                 {
                     Toast.MakeText(this, "Wrong email or password. Please try again.", ToastLength.Short).Show();
                 }
-
-                //MySqlCommand command = connection.CreateCommand();
-                //command.CommandText = "SELECT FROM uzytkownik (Email, Haslo) VALUES (@textEmailAddress, @login_Password)";
-                //command.Parameters.AddWithValue("@textEmailAddress", textEmailAddress.Text);
-                //command.Parameters.AddWithValue("@login_Password", login_Password.Text);
-
-                //int rows = Convert.ToInt32(command.ExecuteScalar());
-
-                //if (rows == 1)
-                //{
-                //    StartActivity(typeof(MapScreen));
-                //}
-                //else
-                //{
-                //    Toast.MakeText(this, "Try again wrong email or password!", ToastLength.Short).Show();
-                //}
-
-
             };
-            
-            //ButtonLogin6.Click += delegate
-            //{
-            //    StartActivity(typeof(CarSelector));
-            //};
-         
+
+            ButtonLogin6.Click += delegate
+            {
+                StartActivity(typeof(CarSelector));
+            };
+
             #endregion
 
         }

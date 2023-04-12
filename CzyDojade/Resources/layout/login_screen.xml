@@ -9,7 +9,7 @@
     android:minHeight="25px">
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="385dp"
+        android:layout_width="388.0dp"
         android:layout_height="275dp"
         android:src="@drawable/Logo"
         android:scaleType="fitCenter"
