@@ -7,14 +7,10 @@
 
    
          
-    <ImageView
-        android:id="@+id/mapImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="MAPA"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        android:src="@drawable/map" />
+    <com.mapbox.mapboxsdk.maps.MapView
+    android:id="@+id/mapView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
     
      <LinearLayout 
         android:layout_width="match_parent"
