@@ -14,4 +14,12 @@
 	<string name="hint_username">Nazwa użytkownika</string>
 	<string name="hint_password">Hasło</string>
 	<string name="hint_password_confirm">Potwierdź hasło</string>
+	<string name="username">Username</string>
+	<string name="email">email@example.com</string>
+	<string name="my_cars">Moje samochody</string>
+	<string name="car_info">Car info</string>
+	<string name="add_car">Dodaj samochód</string>
+	<string name="settings">Ustawienia</string>
+	<string name="change_password">Zmień hasło</string>
+	<string name="logout">Wyloguj się</string>
 </resources>

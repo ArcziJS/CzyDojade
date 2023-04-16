@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:orientation="vertical"
+   android:layout_width="match_parent"
+   android:background="@color/colorBackground"
+   android:layout_height="match_parent">
+
+   <LinearLayout
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center_vertical"
+       android:padding="16dp">
+
+       <ImageView
+           android:id="@+id/avatar"
+           android:layout_width="48dp"
+           android:layout_height="48dp"
+           android:src="@drawable/avatar"/>
+
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="1dp"
+           android:layout_marginStart="16dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:id="@+id/user_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/username"
+               android:textColor="@color/colorButtonText"
+               android:textSize="18sp"
+               android:textStyle="bold"
+               android:gravity="center_vertical"/>
+
+           <TextView
+               android:id="@+id/email"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/email"
+               android:textColor="@color/colorButtonText"
+               android:textSize="14sp"
+               android:textStyle="normal"
+               android:gravity="center_vertical"/>
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="@color/colorPrimary"/>
+
+   <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/my_cars"
+    android:textColor="@color/colorButtonText"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:padding="16dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_rectangle">
+
+        <ImageView
+            android:id="@+id/car_image"
+            android:layout_width="128dp"
+            android:layout_height="64dp"
+            android:padding="16dp"
+            android:src="@drawable/tesla_model_3_outline"/>
+
+        <TextView
+            android:id="@+id/car_info"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/car_info"
+            android:textColor="@color/colorButtonText"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_car"
+        android:textColor="@color/colorButtonText"
+        android:background="@color/colorAccent"
+        android:textSize="16sp"
+        android:layout_margin="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:textColor="@color/colorButtonText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_rectangle">
+
+        <Button
+            android:id="@+id/change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="@string/change_password"
+            android:textColor="@color/colorButtonText"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="@string/logout"
+            android:textColor="@color/colorButtonText"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+
+    </LinearLayout>
+</LinearLayout>
+
