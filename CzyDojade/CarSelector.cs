@@ -106,57 +106,57 @@ namespace CzyDojade
 
             #region display cars
 
-            ImageView1.SetImageResource(Car1.GetIcon());
+            ImageView1.SetImageDrawable(Car1.DownloadImageDrawable(Car1.GetUrl()));
             TextViewCar1.Text = Car1.GetProducer() + " " + Car1.GetModel();
             TextViewRange1.Text = "Range: " + Car1.GetRange() + " km";
             ButtonSelectCar1.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView2.SetImageResource(Car2.GetIcon());
+            ImageView2.SetImageDrawable(Car2.DownloadImageDrawable(Car2.GetUrl()));
             TextViewCar2.Text = Car2.GetProducer() + " " + Car2.GetModel();
             TextViewRange2.Text = "Range: " + Car2.GetRange() + " km";
             ButtonSelectCar2.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView3.SetImageResource(Car3.GetIcon());
+            ImageView3.SetImageDrawable(Car3.DownloadImageDrawable(Car3.GetUrl()));
             TextViewCar3.Text = Car3.GetProducer() + " " + Car3.GetModel();
             TextViewRange3.Text = "Range: " + Car3.GetRange() + " km";
             ButtonSelectCar3.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView4.SetImageResource(Car4.GetIcon());
+            ImageView4.SetImageDrawable(Car4.DownloadImageDrawable(Car4.GetUrl()));
             TextViewCar4.Text = Car4.GetProducer() + " " + Car4.GetModel();
             TextViewRange4.Text = "Range: " + Car4.GetRange() + " km";
             ButtonSelectCar4.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView5.SetImageResource(Car5.GetIcon());
+            ImageView5.SetImageDrawable(Car5.DownloadImageDrawable(Car5.GetUrl()));
             TextViewCar5.Text = Car5.GetProducer() + " " + Car5.GetModel();
             TextViewRange5.Text = "Range: " + Car5.GetRange() + " km";
             ButtonSelectCar5.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView6.SetImageResource(Car6.GetIcon());
+            ImageView6.SetImageDrawable(Car6.DownloadImageDrawable(Car6.GetUrl()));
             TextViewCar6.Text = Car6.GetProducer() + " " + Car6.GetModel();
             TextViewRange6.Text = "Range: " + Car6.GetRange() + " km";
             ButtonSelectCar6.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView7.SetImageResource(Car7.GetIcon());
+            ImageView7.SetImageDrawable(Car7.DownloadImageDrawable(Car7.GetUrl()));
             TextViewCar7.Text = Car7.GetProducer() + " " + Car7.GetModel();
             TextViewRange7.Text = "Range: " + Car7.GetRange() + " km";
             ButtonSelectCar7.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView8.SetImageResource(Car8.GetIcon());
+            ImageView8.SetImageDrawable(Car8.DownloadImageDrawable(Car8.GetUrl()));
             TextViewCar8.Text = Car8.GetProducer() + " " + Car8.GetModel();
             TextViewRange8.Text = "Range: " + Car8.GetRange() + " km";
             ButtonSelectCar8.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView9.SetImageResource(Car9.GetIcon());
+            ImageView9.SetImageDrawable(Car9.DownloadImageDrawable(Car9.GetUrl()));
             TextViewCar9.Text = Car9.GetProducer() + " " + Car9.GetModel();
             TextViewRange9.Text = "Range: " + Car9.GetRange() + " km";
             ButtonSelectCar9.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView10.SetImageResource(Car10.GetIcon());
+            ImageView10.SetImageDrawable(Car10.DownloadImageDrawable(Car10.GetUrl()));
             TextViewCar10.Text = Car10.GetProducer() + " " + Car10.GetModel();
             TextViewRange10.Text = "Range: " + Car10.GetRange() + " km";
             ButtonSelectCar10.Visibility = Android.Views.ViewStates.Visible;
 
-            ImageView11.SetImageResource(Car11.GetIcon());
+            ImageView11.SetImageDrawable(Car11.DownloadImageDrawable(Car11.GetUrl()));
             TextViewCar11.Text = Car11.GetProducer() + " " + Car11.GetModel();
             TextViewRange11.Text = "Range: " + Car11.GetRange() + " km";
             ButtonSelectCar11.Visibility = Android.Views.ViewStates.Visible;
