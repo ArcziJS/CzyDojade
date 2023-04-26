@@ -22,4 +22,6 @@
 	<string name="settings">Ustawienia</string>
 	<string name="change_password">Zmień hasło</string>
 	<string name="logout">Wyloguj się</string>
+	<string name="searchLocation">Search for a location...</string>
+	<string name="search">Szukaj</string>
 </resources>
