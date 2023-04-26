@@ -6,6 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <SearchView
+            android:id="@+id/searchCarBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for your car model" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
