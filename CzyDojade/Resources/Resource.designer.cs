@@ -10405,7 +10405,7 @@ namespace CzyDojade
 			public const int scrollView = 2131231123;
 			
 			// aapt resource value: 0x7F080195
-			public const int searchCarBox = 2131231125;
+			public const int searchButton = 2131231125;
 			
 			// aapt resource value: 0x7F080196
 			public const int searchView = 2131231126;
@@ -12171,32 +12171,38 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0F00C2
 			public const int path_password_strike_through = 2131689666;
 			
-			// aapt resource value: 0x7F0F00C4
-			public const int searchbar_scrolling_view_behavior = 2131689668;
-			
-			// aapt resource value: 0x7F0F00C5
-			public const int searchview_clear_text_content_description = 2131689669;
+			// aapt resource value: 0x7F0F00C3
+			public const int search = 2131689667;
 			
 			// aapt resource value: 0x7F0F00C6
-			public const int searchview_navigation_content_description = 2131689670;
+			public const int searchbar_scrolling_view_behavior = 2131689670;
 			
-			// aapt resource value: 0x7F0F00C3
-			public const int search_menu_title = 2131689667;
+			// aapt resource value: 0x7F0F00C4
+			public const int searchLocation = 2131689668;
 			
 			// aapt resource value: 0x7F0F00C7
-			public const int settings = 2131689671;
+			public const int searchview_clear_text_content_description = 2131689671;
 			
 			// aapt resource value: 0x7F0F00C8
-			public const int side_sheet_accessibility_pane_title = 2131689672;
+			public const int searchview_navigation_content_description = 2131689672;
+			
+			// aapt resource value: 0x7F0F00C5
+			public const int search_menu_title = 2131689669;
 			
 			// aapt resource value: 0x7F0F00C9
-			public const int side_sheet_behavior = 2131689673;
+			public const int settings = 2131689673;
 			
 			// aapt resource value: 0x7F0F00CA
-			public const int status_bar_notification_info_overflow = 2131689674;
+			public const int side_sheet_accessibility_pane_title = 2131689674;
 			
 			// aapt resource value: 0x7F0F00CB
-			public const int username = 2131689675;
+			public const int side_sheet_behavior = 2131689675;
+			
+			// aapt resource value: 0x7F0F00CC
+			public const int status_bar_notification_info_overflow = 2131689676;
+			
+			// aapt resource value: 0x7F0F00CD
+			public const int username = 2131689677;
 			
 			static String()
 			{
