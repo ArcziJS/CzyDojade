@@ -50,7 +50,7 @@ namespace CzyDojade
                 command.Parameters.AddWithValue("@email", Email.Text);
                 command.Parameters.AddWithValue("@password", Password.Text);
                 command.ExecuteNonQuery();
-                StartActivity(typeof(MapScreen));
+                StartActivity(typeof(CarSelector));
             };
             #endregion
 

@@ -61,6 +61,11 @@ namespace CzyDojade
                 StartActivity(typeof(CarSelector));
             };
 
+            ButtonLogin2.Click += delegate
+            {
+                StartActivity(typeof(RegisterScreen));
+            };
+
             #endregion
 
         }
