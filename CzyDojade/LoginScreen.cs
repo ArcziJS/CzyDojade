@@ -2,41 +2,35 @@
 using Android.Content.Res;
 using Android.OS;
 using Android.Widget;
+using Android.Preferences;
 using MySqlConnector;
 using System;
+using Android.Content;
 
 namespace CzyDojade
 {
     [Activity(Label = "LoginScreen", Theme = "@style/AppTheme")]
     public class LoginScreen : Activity
     {
+        private ISharedPreferences prefs;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.login_screen);
-            #region SQL Connect
 
             MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
             connection.Open();
 
-            #endregion
+            prefs = PreferenceManager.GetDefaultSharedPreferences(this);
 
-            #region Buttons
             Button ButtonLogin = FindViewById<Button>(Resource.Id.ButtonLogin1);
             Button ButtonLogin2 = FindViewById<Button>(Resource.Id.ButtonLogin2);
             Button ButtonLogin3 = FindViewById<Button>(Resource.Id.ButtonLogin3);
             Button ButtonLogin6 = FindViewById<Button>(Resource.Id.ButtonLogin6);
             EditText Email = FindViewById<EditText>(Resource.Id.Email);
             EditText Password = FindViewById<EditText>(Resource.Id.Password);
-
-            #endregion
-
-            #region Functionality of Buttons
-            ButtonLogin.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
 
             ButtonLogin.Click += delegate
             {
@@ -48,6 +42,11 @@ namespace CzyDojade
 
                 if (count == 1)
                 {
+                    ISharedPreferencesEditor editor = prefs.Edit();
+                    editor.PutBoolean("loggedIn", true);
+                    editor.PutString("email", Email.Text);
+                    editor.Commit();
+
                     StartActivity(typeof(MapScreen));
                 }
                 else
@@ -65,9 +64,17 @@ namespace CzyDojade
             {
                 StartActivity(typeof(RegisterScreen));
             };
+        }
 
-            #endregion
+        protected override void OnResume()
+        {
+            base.OnResume();
 
+            bool loggedIn = prefs.GetBoolean("loggedIn", false);
+            if (loggedIn)
+            {
+                StartActivity(typeof(MapScreen));
+            }
         }
     }
 }
