@@ -1,11 +1,10 @@
-﻿using Android.App;
-using Android.Content.Res;
-using Android.OS;
-using Android.Widget;
-using Android.Preferences;
-using MySqlConnector;
-using System;
+﻿using System;
+using Android.App;
 using Android.Content;
+using Android.OS;
+using Android.Preferences;
+using Android.Widget;
+using MySqlConnector;
 
 namespace CzyDojade
 {
