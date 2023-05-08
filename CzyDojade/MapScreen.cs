@@ -2,6 +2,9 @@
 using Android.OS;
 using Android.Widget;
 using System.Linq;
+using Android.Content;
+using Android.Views;
+using AndroidX.AppCompat.App;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -12,6 +15,13 @@ using Com.Mapbox.Mapboxsdk.Location;
 using Com.Mapbox.Mapboxsdk.Camera;
 using Com.Mapbox.Mapboxsdk.Geometry;
 using Android.Views.InputMethods;
+using Android.Support.V4.App;
+using Google.Android.Material.FloatingActionButton;
+using AndroidX.Core.Content;
+using Android.Content.PM;
+using Android.Locations;
+using Com.Mapbox.Mapboxsdk.Location;
+
 
 namespace CzyDojade
 {
@@ -19,6 +29,7 @@ namespace CzyDojade
     public class MapScreen : Activity, IOnMapReadyCallback
     {
         MapView mapView;
+        LocationComponent locationComponent;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -45,8 +56,6 @@ namespace CzyDojade
                 .Build();
 
             mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
-
-
 
             #region Search
             AutoCompleteTextView searchView = FindViewById<AutoCompleteTextView>(Resource.Id.searchView);
@@ -143,11 +152,19 @@ namespace CzyDojade
 
 
             #endregion
+            FloatingActionButton myLocationButton = FindViewById<FloatingActionButton>(Resource.Id.testField);
+            myLocationButton.Click += (sender, e) =>
+            {
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .Target(new LatLng(53.123326, 23.08638))  // Wprowadź tutaj początkowe koordynaty
+                    .Zoom(15)
+                    .Build();
+
+                mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
+            };
+
+
         }
-
-
-
-
 
     }
 }
