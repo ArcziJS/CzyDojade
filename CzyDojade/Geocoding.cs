@@ -20,7 +20,7 @@ namespace CzyDojade
     {
         static readonly HttpClient client = new HttpClient();
         const string baseUrl = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
-        const string accessToken = "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ2RyZmk2azBiaDUzZXEzY3ZqdXhlOWYifQ.DXoRCQQlVsnu4Ujv3-r7OQ";
+        const string accessToken = "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ";
 
         public static async Task<JObject> ForwardGeocodeAsync(string query)
         {
@@ -30,17 +30,14 @@ namespace CzyDojade
         }
         public static async Task<JObject> ForwardGeocodeAsync(string query, string[] languages = null)
         {
-            // Build the URL for the forward geocoding request
             string url = $"{baseUrl}{query}.json?access_token={accessToken}";
 
-            // Add the language parameter if it is provided
             if (languages != null && languages.Length > 0)
             {
                 string languageParameter = string.Join(",", languages);
                 url += $"&language={languageParameter}";
             }
 
-            // Perform the forward geocoding request
             var response = await client.GetAsync(url);
             var responseContent = await response.Content.ReadAsStringAsync();
             return JObject.Parse(responseContent);
