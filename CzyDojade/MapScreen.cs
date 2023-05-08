@@ -7,14 +7,25 @@ using Com.Mapbox.Mapboxsdk.Annotations;
 using Com.Mapbox.Mapboxsdk.Camera;
 using Com.Mapbox.Mapboxsdk.Geometry;
 using Com.Mapbox.Mapboxsdk.Maps;
+using Com.Mapbox.Services.Api.Directions.V5;
+using Com.Mapbox.Services.Android.Navigation.V5;
+using Com.Mapbox.Services.Commons.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using Com.Mapbox.Api;
-using Com.Mapbox.Core.Utils;
-using Com.Mapbox.Api.Directions.V5.Models;
-using Com.Mapbox.Api.Directions.V5;
-using Com.Mapbox.Geojson;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Net.Http;
+using Com.Mapbox.Services.Api.Directions.V5.Models;
+using Com.Mapbox.Services.Commons.Utils;
+//using Com.Mapbox.Core.Constants;
+using Android.Graphics;
+using Com.Mapbox.Services;
+//using Com.Mapbox.Api;
+//using Com.Mapbox.Core.Utils;
+//using Com.Mapbox.Api.Directions.V5.Models;
+//using Com.Mapbox.Api.Directions.V5;
+//using Com.Mapbox.Geojson;
 
 namespace CzyDojade
 {
@@ -24,7 +35,7 @@ namespace CzyDojade
         MapView mapView;
         LatLng routeStart;
         LatLng routeEnd;
-        MapRouteGenerator routeGenerator;
+        //MapRouteGenerator routeGenerator;
         
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -46,7 +57,7 @@ namespace CzyDojade
         {
             mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/dark-v10"));
 
-            routeGenerator = new MapRouteGenerator(mapboxMap, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
+            //routeGenerator = new MapRouteGenerator(mapboxMap, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
         
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -156,6 +167,8 @@ namespace CzyDojade
                     double longitude = (double)coordinates[0];
                     double latitude = (double)coordinates[1];
                     routeEnd = new LatLng(latitude, longitude);
+                    CreateMarker(routeEnd);
+
                 }
                 else
                 {
@@ -180,6 +193,8 @@ namespace CzyDojade
                         double longitude = (double)coordinates[0];
                         double latitude = (double)coordinates[1];
                         routeEnd = new LatLng(latitude, longitude);
+                        CreateMarker(routeEnd);
+
                     }
                     else
                     {
@@ -232,7 +247,10 @@ namespace CzyDojade
                     double latitude = (double)coordinates[1];
                     routeEnd = new LatLng(latitude, longitude);
 
-                    routeGenerator.GenerateRoute(routeStart, routeEnd);
+                    CreateMarker(routeEnd);
+                    //routeGenerator.GenerateRoute(routeStart, routeEnd);
+
+                    await GetRoute(routeStart, routeEnd);
                 }
                 else
                 {
@@ -247,9 +265,47 @@ namespace CzyDojade
             void MoveCamera(LatLng position)
             {
                 mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(position, 15), 5000);
+                CreateMarker(position);
             }
 
-            
+            void CreateMarker(LatLng position)
+            {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.SetPosition(position);
+                mapboxMap.AddMarker(markerOptions);
+            }
+
+            async Task GetRoute(LatLng routeStart, LatLng routeEnd)
+            {
+                var origin = Position.FromLngLat(routeStart.Longitude, routeStart.Latitude);
+                var destination = Position.FromLngLat(routeEnd.Longitude, routeEnd.Latitude);
+
+                var baseUrl = "https://api.mapbox.com/directions/v5";
+                var url = $"{baseUrl}/{DirectionsCriteria.ProfileDriving}/{origin.Longitude},{origin.Latitude};{destination.Longitude},{destination.Latitude}.json?access_token={Mapbox.AccessToken}";
+
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var directionsResponse = JsonConvert.DeserializeObject<DirectionsResponse>(json);
+                    if (directionsResponse.Routes.Count > 0)
+                    {
+                        var currentRoute = directionsResponse.Routes[0];
+                        if (mapboxMap != null)
+                        {
+                            var points = PolylineUtils.Decode(currentRoute.Geometry, Constants.Precision6)
+                    .Select(p => new LatLng(p.Latitude, p.Longitude))
+                    .ToList();
+
+                            mapboxMap.AddPolyline(new PolylineOptions()
+                                .AddAll((Java.Lang.IIterable)points)
+                                .InvokeColor(Color.Blue)
+                                .InvokeWidth(5));
+                        }
+                    }
+                }
+            }
 
             #endregion
         }
