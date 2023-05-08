@@ -24,4 +24,5 @@
 	<string name="logout">Wyloguj się</string>
 	<string name="searchLocation">Search for a location...</string>
 	<string name="search">Szukaj</string>
+	<string name="change_avatar">Zmień awatar</string>
 </resources>
