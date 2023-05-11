@@ -7,20 +7,19 @@ using Com.Mapbox.Mapboxsdk.Annotations;
 using Com.Mapbox.Mapboxsdk.Camera;
 using Com.Mapbox.Mapboxsdk.Geometry;
 using Com.Mapbox.Mapboxsdk.Maps;
-using Com.Mapbox.Services.Api.Directions.V5;
-using Com.Mapbox.Services.Android.Navigation.V5;
-using Com.Mapbox.Services.Commons.Models;
+using Com.Mapbox.Api.Directions.V5;
+using Com.Mapbox.Android.Telemetry.Location;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http;
-using Com.Mapbox.Services.Api.Directions.V5.Models;
-using Com.Mapbox.Services.Commons.Utils;
 //using Com.Mapbox.Core.Constants;
 using Android.Graphics;
-using Com.Mapbox.Services;
+using Com.Mapbox.Api.Directions.V5.Models;
+using Com.Mapbox.Geojson.Utils;
+using Com.Mapbox.Core.Constants;
 //using Com.Mapbox.Api;
 //using Com.Mapbox.Core.Utils;
 //using Com.Mapbox.Api.Directions.V5.Models;
@@ -277,11 +276,11 @@ namespace CzyDojade
 
             async Task GetRoute(LatLng routeStart, LatLng routeEnd)
             {
-                var origin = Position.FromLngLat(routeStart.Longitude, routeStart.Latitude);
-                var destination = Position.FromLngLat(routeEnd.Longitude, routeEnd.Latitude);
+                //var origin = Position.FromLngLat(routeStart.Longitude, routeStart.Latitude);
+                //var destination = Position.FromLngLat(routeEnd.Longitude, routeEnd.Latitude);
 
                 var baseUrl = "https://api.mapbox.com/directions/v5";
-                var url = $"{baseUrl}/{DirectionsCriteria.ProfileDriving}/{origin.Longitude},{origin.Latitude};{destination.Longitude},{destination.Latitude}.json?access_token={Mapbox.AccessToken}";
+                var url = $"{baseUrl}/{DirectionsCriteria.ProfileDriving}/{routeStart.Longitude},{routeStart.Latitude};{routeEnd.Longitude},{routeEnd.Latitude}.json?access_token={Mapbox.AccessToken}";
 
                 var httpClient = new HttpClient();
                 var response = await httpClient.GetAsync(url);
@@ -289,13 +288,13 @@ namespace CzyDojade
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var directionsResponse = JsonConvert.DeserializeObject<DirectionsResponse>(json);
-                    if (directionsResponse.Routes.Count > 0)
+                    if (directionsResponse.Routes().Count > 0)
                     {
-                        var currentRoute = directionsResponse.Routes[0];
+                        var currentRoute = directionsResponse.Routes()[0];
                         if (mapboxMap != null)
                         {
-                            var points = PolylineUtils.Decode(currentRoute.Geometry, Constants.Precision6)
-                    .Select(p => new LatLng(p.Latitude, p.Longitude))
+                            var points = PolylineUtils.Decode(currentRoute.Geometry(), Constants.Precision6)
+                    .Select(p => new LatLng(p.Latitude(), p.Longitude()))
                     .ToList();
 
                             mapboxMap.AddPolyline(new PolylineOptions()
