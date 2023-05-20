@@ -1,19 +1,19 @@
 ﻿using Android.App;
+using Android.Graphics;
 using Android.OS;
 using Android.Views.InputMethods;
 using Android.Widget;
-using Com.Mapbox.Mapboxsdk;
+using Com.Mapbox.Core.Constants;
+using Com.Mapbox.Geojson.Utils;
 using Com.Mapbox.Mapboxsdk.Annotations;
 using Com.Mapbox.Mapboxsdk.Camera;
 using Com.Mapbox.Mapboxsdk.Geometry;
 using Com.Mapbox.Mapboxsdk.Maps;
-using Com.Mapbox.Api.Directions.V5;
-using Com.Mapbox.Android.Telemetry.Location;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net.Http;
 //using Com.Mapbox.Core.Constants;
 using Android.Graphics;
@@ -38,14 +38,14 @@ namespace CzyDojade
         MapView mapView;
         LatLng routeStart;
         LatLng routeEnd;
-        //MapRouteGenerator routeGenerator;
-        
+        List<Marker> markers = new List<Marker>();
+        int maxMarkerCount = 2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            Com.Mapbox.Mapboxsdk.Mapbox.GetInstance(this, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");            
+            Com.Mapbox.Mapboxsdk.Mapbox.GetInstance(this, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
 
             SetContentView(Resource.Layout.map_screen);
 
@@ -63,12 +63,17 @@ namespace CzyDojade
 
         public void OnMapReady(MapboxMap mapboxMap)
         {
-            mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/dark-v10"));
+            var hour = DateTime.Now.Hour;
+            if (hour >= 6 && hour < 18)
+            {
+                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/light-v10"));
+            }
+            else
+            {
+                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/dark-v10"));
+            }
 
-            //routeGenerator = new MapRouteGenerator(mapboxMap, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
-        
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
+            CameraPosition cameraPosition = new CameraPosition.Builder()
                 .Target(new LatLng(53.123326, 23.08638))
                 .Zoom(18)
                 .Build();
@@ -100,6 +105,7 @@ namespace CzyDojade
             #endregion
 
             #region Search
+
             AutoCompleteTextView searchViewSource = FindViewById<AutoCompleteTextView>(Resource.Id.searchViewSource);
             AutoCompleteTextView searchViewDestination = FindViewById<AutoCompleteTextView>(Resource.Id.searchViewDestination);
 
@@ -122,7 +128,7 @@ namespace CzyDojade
                 string selectedAddress = searchViewSource.Adapter.GetItem(args.Position).ToString();
 
                 JObject response = await Geocoding.ForwardGeocodeAsync(selectedAddress);
-                   
+
                 JArray features = (JArray)response["features"];
                 if (features.Count > 0)
                 {
@@ -277,10 +283,10 @@ namespace CzyDojade
                     double latitude = (double)coordinates[1];
                     routeEnd = new LatLng(latitude, longitude);
 
-                    CreateMarker(routeEnd);
-                    //routeGenerator.GenerateRoute(routeStart, routeEnd);
+                    MoveCameraBetween(routeStart, routeEnd);
 
                     await GetRoute(routeStart, routeEnd);
+
                 }
                 else
                 {
@@ -288,9 +294,7 @@ namespace CzyDojade
                 }
             };
 
-
             #endregion
-            #region Destination
 
             void MoveCamera(LatLng position)
             {
@@ -298,40 +302,97 @@ namespace CzyDojade
                 CreateMarker(position);
             }
 
+            void MoveCameraBetween(LatLng position1, LatLng position2)
+            {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.Include(position1);
+                builder.Include(position2);
+                LatLngBounds bounds = builder.Build();
+
+                int padding = 100; // Adjust the padding as needed
+
+                mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngBounds(bounds, padding), 5000);
+
+                CreateMarker(position1);
+                CreateMarker(position2);
+            }
+
             void CreateMarker(LatLng position)
             {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.SetPosition(position);
-                mapboxMap.AddMarker(markerOptions);
+
+                IconFactory iconFactory = IconFactory.GetInstance(this);
+                Icon icon = iconFactory.DefaultMarker();
+                markerOptions.SetIcon(icon);
+
+                Marker marker = mapboxMap.AddMarker(markerOptions);
+                markers.Add(marker);
+
+                if (markers.Count > maxMarkerCount)
+                {
+                    Marker oldestMarker = markers[0];
+                    oldestMarker.Remove();
+                    markers.RemoveAt(0);
+                }
             }
+
+
+
+            #region Destination
 
             async Task GetRoute(LatLng routeStart, LatLng routeEnd)
             {
-                //var origin = Position.FromLngLat(routeStart.Longitude, routeStart.Latitude);
-                //var destination = Position.FromLngLat(routeEnd.Longitude, routeEnd.Latitude);
+                var polylines = mapboxMap.Polylines;
+                foreach (var polyline in polylines)
+                {
+                    mapboxMap.RemovePolyline(polyline);
+                }
 
                 var baseUrl = "https://api.mapbox.com/directions/v5";
-                var url = $"{baseUrl}/{DirectionsCriteria.ProfileDriving}/{routeStart.Longitude},{routeStart.Latitude};{routeEnd.Longitude},{routeEnd.Latitude}.json?access_token={Mapbox.AccessToken}";
+                var accessToken = "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ";
 
-                var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var directionsResponse = JsonConvert.DeserializeObject<DirectionsResponse>(json);
-                    if (directionsResponse.Routes().Count > 0)
+                var routeOptions = new List<string>()
                     {
-                        var currentRoute = directionsResponse.Routes()[0];
-                        if (mapboxMap != null)
-                        {
-                            var points = PolylineUtils.Decode(currentRoute.Geometry(), Constants.Precision6)
-                    .Select(p => new LatLng(p.Latitude(), p.Longitude()))
-                    .ToList();
+                        "driving",
+                        "driving-traffic",
+                        "walking",
+                        "cycling"
+                    };
 
-                            mapboxMap.AddPolyline(new PolylineOptions()
-                                .AddAll((Java.Lang.IIterable)points)
-                                .InvokeColor(Color.Blue)
-                                .InvokeWidth(5));
+                foreach (var option in routeOptions)
+                {
+                    var url = $"{baseUrl}/mapbox/{option}/{routeStart.Longitude},{routeStart.Latitude};{routeEnd.Longitude},{routeEnd.Latitude}.json?access_token={accessToken}";
+
+                    using (var httpClient = new HttpClient())
+                    {
+                        var response = await httpClient.GetAsync(url);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var json = await response.Content.ReadAsStringAsync();
+                            var responseObject = JsonConvert.DeserializeObject<MapboxDirectionsResponse>(json);
+                            if (responseObject.Routes.Count > 0 && mapboxMap != null)
+                            {
+                                var currentRoute = responseObject.Routes[0];
+                                var points = PolylineUtils.Decode(currentRoute.Geometry, Constants.Precision6)
+                                    .Select(p => new LatLng(p.Latitude(), p.Longitude()))
+                                    .ToList();
+
+                                var polylineOptions = new PolylineOptions()
+                                    .InvokeColor(Color.Blue)
+                                    .InvokeWidth(5);
+
+                                foreach (var point in points)
+                                {
+                                    polylineOptions.Add(new LatLng(point.Latitude * 10, point.Longitude * 10));
+                                }
+
+                                mapboxMap.AddPolyline(polylineOptions);
+                            }
+                        }
+                        else
+                        {
+                            Toast.MakeText(this, response.ReasonPhrase, ToastLength.Short).Show();
                         }
                     }
                 }
@@ -339,5 +400,7 @@ namespace CzyDojade
 
             #endregion
         }
+
     }
+
 }
