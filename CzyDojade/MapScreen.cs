@@ -309,14 +309,12 @@ namespace CzyDojade
                 var baseUrl = "https://api.mapbox.com/directions/v5";
                 var accessToken = "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ";
 
-                // Define different route options
                 var routeOptions = new List<string>()
                     {
-                        "driving",                  
-                        "driving-traffic",          
+                        "driving",
+                        "driving-traffic",
                         "walking",
                         "cycling"
-                        // Add more route options as needed
                     };
 
                 foreach (var option in routeOptions)
@@ -356,7 +354,6 @@ namespace CzyDojade
                     }
                 }
             }
-
 
             #endregion
         }
