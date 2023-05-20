@@ -22,7 +22,10 @@
 	<string name="settings">Ustawienia</string>
 	<string name="change_password">Zmień hasło</string>
 	<string name="logout">Wyloguj się</string>
-	<string name="searchLocation">Search for a location...</string>
+	<string name="searchLocationFrom">Punkt początkowy</string>
+	<string name="searchLocationTo">Punkt docelowy</string>
 	<string name="search">Szukaj</string>
+	<string name="directionsFrom">OD</string>
+	<string name="directionsTo">DO</string>
 	<string name="change_avatar">Zmień awatar</string>
 </resources>

@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Graphics;
+using Android.Locations;
 using Android.OS;
 using Android.Views.InputMethods;
 using Android.Widget;
@@ -9,26 +10,14 @@ using Com.Mapbox.Mapboxsdk.Annotations;
 using Com.Mapbox.Mapboxsdk.Camera;
 using Com.Mapbox.Mapboxsdk.Geometry;
 using Com.Mapbox.Mapboxsdk.Maps;
+using Google.Android.Material.FloatingActionButton;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-//using Com.Mapbox.Core.Constants;
-using Android.Graphics;
-using Com.Mapbox.Api.Directions.V5.Models;
-using Com.Mapbox.Geojson.Utils;
-using Com.Mapbox.Core.Constants;
-using Android.Locations;
-using Com.Mapbox.Android.Core.Location;
-//using Com.Mapbox.Api;
-//using Com.Mapbox.Core.Utils;
-//using Com.Mapbox.Api.Directions.V5.Models;
-//using Com.Mapbox.Api.Directions.V5;
-//using Com.Mapbox.Geojson;
-using Com.Mapbox.Android.Core.Location;
-using Google.Android.Material.FloatingActionButton;
+using System.Threading.Tasks;
 
 namespace CzyDojade
 {
@@ -39,7 +28,6 @@ namespace CzyDojade
         LatLng routeStart;
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
-        int maxMarkerCount = 2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -58,7 +46,7 @@ namespace CzyDojade
             Criteria criteria = new Criteria();
             string provider = locationManager.GetBestProvider(criteria, false);
             Location location = locationManager.GetLastKnownLocation(provider);
-            
+
         }
 
         public void OnMapReady(MapboxMap mapboxMap)
@@ -96,10 +84,10 @@ namespace CzyDojade
                     MoveCamera(myLocation);
                 }
             };
-            
 
 
-  
+
+
 
 
             #endregion
@@ -309,7 +297,7 @@ namespace CzyDojade
                 builder.Include(position2);
                 LatLngBounds bounds = builder.Build();
 
-                int padding = 100; // Adjust the padding as needed
+                int padding = 100;
 
                 mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngBounds(bounds, padding), 5000);
 
@@ -329,6 +317,8 @@ namespace CzyDojade
                 Marker marker = mapboxMap.AddMarker(markerOptions);
                 markers.Add(marker);
 
+                int maxMarkerCount = 2;
+
                 if (markers.Count > maxMarkerCount)
                 {
                     Marker oldestMarker = markers[0];
@@ -336,8 +326,6 @@ namespace CzyDojade
                     markers.RemoveAt(0);
                 }
             }
-
-
 
             #region Destination
 
