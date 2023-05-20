@@ -20,11 +20,15 @@ using Android.Graphics;
 using Com.Mapbox.Api.Directions.V5.Models;
 using Com.Mapbox.Geojson.Utils;
 using Com.Mapbox.Core.Constants;
+using Android.Locations;
+using Com.Mapbox.Android.Core.Location;
 //using Com.Mapbox.Api;
 //using Com.Mapbox.Core.Utils;
 //using Com.Mapbox.Api.Directions.V5.Models;
 //using Com.Mapbox.Api.Directions.V5;
 //using Com.Mapbox.Geojson;
+using Com.Mapbox.Android.Core.Location;
+using Google.Android.Material.FloatingActionButton;
 
 namespace CzyDojade
 {
@@ -49,6 +53,11 @@ namespace CzyDojade
             mapView.OnCreate(savedInstanceState);
             mapView.GetMapAsync(this);
 
+            //get access to android location, that will later be used to get current gps location
+            LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
+            Criteria criteria = new Criteria();
+            string provider = locationManager.GetBestProvider(criteria, false);
+            Location location = locationManager.GetLastKnownLocation(provider);
             
         }
 
@@ -66,7 +75,29 @@ namespace CzyDojade
 
             mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
 
+            #region Return to current gps location button   
+            //use floating action button with id returnToMyLocation to return to current gps location
+            FloatingActionButton returnToMyLocation = FindViewById<FloatingActionButton>(Resource.Id.returnToMyLocation);
+            returnToMyLocation.Click += (sender, e) =>
+            {
+                LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
+                Criteria criteria = new Criteria();
+                string provider = locationManager.GetBestProvider(criteria, false);
+                Location location = locationManager.GetLastKnownLocation(provider);
 
+                if (location != null)
+                {
+                    LatLng myLocation = new LatLng(location.Latitude, location.Longitude);
+                    MoveCamera(myLocation);
+                }
+            };
+            
+
+
+  
+
+
+            #endregion
 
             #region Search
             AutoCompleteTextView searchViewSource = FindViewById<AutoCompleteTextView>(Resource.Id.searchViewSource);
