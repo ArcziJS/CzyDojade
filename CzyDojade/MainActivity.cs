@@ -3,13 +3,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using System.Threading.Tasks;
 
 namespace CzyDojade
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -17,12 +18,12 @@ namespace CzyDojade
             SetContentView(Resource.Layout.main_screen);
 
             ImageButton selectCarButton = FindViewById<ImageButton>(Resource.Id.SelectCarButton);
-            selectCarButton.Click += delegate
-            {
-                StartActivity(typeof(LoginScreen));
-            };
-            
+
+            await Task.Delay(1000); // Opóźnienie 5 sekund
+
+            StartActivity(typeof(LoginScreen));
         }
+
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

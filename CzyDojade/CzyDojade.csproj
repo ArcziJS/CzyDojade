@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Geocoding.cs" />
     <Compile Include="MapboxDirectionsResponse.cs" />
+    <Compile Include="RestoringPassword.cs" />
     <Compile Include="RegisterScreen.cs" />
     <Compile Include="MapScreen.cs" />
     <Compile Include="LoginScreen.cs" />
@@ -242,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\distance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\restoring_password.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
