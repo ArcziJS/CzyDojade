@@ -1,9 +1,11 @@
 ﻿using Android.App;
 using Android.Graphics;
 using Android.Locations;
+using Android.Opengl;
 using Android.OS;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Com.Mapbox.Api.Directions.V5;
 using Com.Mapbox.Core.Constants;
 using Com.Mapbox.Geojson.Utils;
 using Com.Mapbox.Mapboxsdk.Annotations;
@@ -28,6 +30,9 @@ namespace CzyDojade
         LatLng routeStart;
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
+
+        int evChargesNeeded;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -86,8 +91,8 @@ namespace CzyDojade
             };
 
 
-
-
+            TextView routeLengthTextView = FindViewById<TextView>(Resource.Id.routeLengthTextView);
+            TextView evChargesTextView = FindViewById<TextView>(Resource.Id.evChargesTextView);
 
 
             #endregion
@@ -366,6 +371,16 @@ namespace CzyDojade
                                     .Select(p => new LatLng(p.Latitude(), p.Longitude()))
                                     .ToList();
 
+                                // Assign route length to variable double routeLengthKm
+                                double routeLengthKm = currentRoute.Distance / 1000;
+
+                                // Calculate EV charges needed (example calculation, adjust according to your requirements)
+                                evChargesNeeded = (int)Math.Ceiling(routeLengthKm / 350);
+
+                                // Update TextViews
+                                routeLengthTextView.Text = $"{routeLengthKm:F2} km";
+                                evChargesTextView.Text = $"{evChargesNeeded}";
+
                                 var polylineOptions = new PolylineOptions()
                                     .InvokeColor(Color.Blue)
                                     .InvokeWidth(5);
@@ -385,6 +400,8 @@ namespace CzyDojade
                     }
                 }
             }
+
+
 
             #endregion
 

@@ -14,5 +14,6 @@ namespace CzyDojade
     public class Route
     {
         public string Geometry { get; set; }
+        public double Distance { get;  set; }
     }
 }
