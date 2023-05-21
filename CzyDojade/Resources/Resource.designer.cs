@@ -9522,17 +9522,14 @@ namespace CzyDojade
 			// aapt resource value: 0x7F080006
 			public const int ButtonLogin6 = 2131230726;
 			
-			// aapt resource value: 0x7F080007
-			public const int ButtonLogin9 = 2131230727;
-			
 			// aapt resource value: 0x7F080074
 			public const int buttonPanel = 2131230836;
 			
-			// aapt resource value: 0x7F080008
-			public const int ButtonRegister = 2131230728;
+			// aapt resource value: 0x7F080007
+			public const int ButtonRegister = 2131230727;
 			
-			// aapt resource value: 0x7F080009
-			public const int ButtonRegister2 = 2131230729;
+			// aapt resource value: 0x7F080008
+			public const int ButtonRegister2 = 2131230728;
 			
 			// aapt resource value: 0x7F080075
 			public const int buttonSelectCar1 = 2131230837;
@@ -9648,8 +9645,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F08009A
 			public const int compress = 2131230874;
 			
-			// aapt resource value: 0x7F08000B
-			public const int ConfirmPassword = 2131230731;
+			// aapt resource value: 0x7F08000A
+			public const int ConfirmPassword = 2131230730;
 			
 			// aapt resource value: 0x7F08009B
 			public const int confirm_button = 2131230875;
@@ -9684,8 +9681,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0800A5
 			public const int cradle = 2131230885;
 			
-			// aapt resource value: 0x7F08000A
-			public const int CTRL = 2131230730;
+			// aapt resource value: 0x7F080009
+			public const int CTRL = 2131230729;
 			
 			// aapt resource value: 0x7F0800A6
 			public const int currentState = 2131230886;
@@ -9804,8 +9801,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0800CC
 			public const int elastic = 2131230924;
 			
-			// aapt resource value: 0x7F08000C
-			public const int Email = 2131230732;
+			// aapt resource value: 0x7F08000B
+			public const int Email = 2131230731;
 			
 			// aapt resource value: 0x7F0800CD
 			public const int email = 2131230925;
@@ -9891,8 +9888,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0800E8
 			public const int fullscreen_header = 2131230952;
 			
-			// aapt resource value: 0x7F08000D
-			public const int FUNCTION = 2131230733;
+			// aapt resource value: 0x7F08000C
+			public const int FUNCTION = 2131230732;
 			
 			// aapt resource value: 0x7F0800E9
 			public const int ghost_view = 2131230953;
@@ -10152,8 +10149,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F08013E
 			public const int message = 2131231038;
 			
-			// aapt resource value: 0x7F08000E
-			public const int META = 2131230734;
+			// aapt resource value: 0x7F08000D
+			public const int META = 2131230733;
 			
 			// aapt resource value: 0x7F08013F
 			public const int middle = 2131231039;
@@ -10308,8 +10305,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F080171
 			public const int notification_main_column_container = 2131231089;
 			
-			// aapt resource value: 0x7F08000F
-			public const int NO_DEBUG = 2131230735;
+			// aapt resource value: 0x7F08000E
+			public const int NO_DEBUG = 2131230734;
 			
 			// aapt resource value: 0x7F080172
 			public const int off = 2131231090;
@@ -10347,8 +10344,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F08017D
 			public const int parent_matrix = 2131231101;
 			
-			// aapt resource value: 0x7F080010
-			public const int Password = 2131230736;
+			// aapt resource value: 0x7F08000F
+			public const int Password = 2131230735;
 			
 			// aapt resource value: 0x7F08017E
 			public const int password_toggle = 2131231102;
@@ -10542,8 +10539,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0801BD
 			public const int search_voice_btn = 2131231165;
 			
-			// aapt resource value: 0x7F080016
-			public const int SelectCarButton = 2131230742;
+			// aapt resource value: 0x7F080015
+			public const int SelectCarButton = 2131230741;
 			
 			// aapt resource value: 0x7F0801BF
 			public const int selected = 2131231167;
@@ -10553,6 +10550,9 @@ namespace CzyDojade
 			
 			// aapt resource value: 0x7F0801BE
 			public const int select_dialog_listview = 2131231166;
+			
+			// aapt resource value: 0x7F080016
+			public const int Send_Button = 2131230742;
 			
 			// aapt resource value: 0x7F0801C1
 			public const int separator = 2131231169;
@@ -10566,8 +10566,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0801C4
 			public const int sharedValueUnset = 2131231172;
 			
-			// aapt resource value: 0x7F080011
-			public const int SHIFT = 2131230737;
+			// aapt resource value: 0x7F080010
+			public const int SHIFT = 2131230736;
 			
 			// aapt resource value: 0x7F0801C5
 			public const int shortcut = 2131231173;
@@ -10581,14 +10581,14 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0801C8
 			public const int showTitle = 2131231176;
 			
+			// aapt resource value: 0x7F080011
+			public const int SHOW_ALL = 2131230737;
+			
 			// aapt resource value: 0x7F080012
-			public const int SHOW_ALL = 2131230738;
+			public const int SHOW_PATH = 2131230738;
 			
 			// aapt resource value: 0x7F080013
-			public const int SHOW_PATH = 2131230739;
-			
-			// aapt resource value: 0x7F080014
-			public const int SHOW_PROGRESS = 2131230740;
+			public const int SHOW_PROGRESS = 2131230739;
 			
 			// aapt resource value: 0x7F0801C9
 			public const int sin = 2131231177;
@@ -10686,8 +10686,8 @@ namespace CzyDojade
 			// aapt resource value: 0x7F0801E8
 			public const int supportScrollUp = 2131231208;
 			
-			// aapt resource value: 0x7F080015
-			public const int SYM = 2131230741;
+			// aapt resource value: 0x7F080014
+			public const int SYM = 2131230740;
 			
 			// aapt resource value: 0x7F0801E9
 			public const int tabMode = 2131231209;

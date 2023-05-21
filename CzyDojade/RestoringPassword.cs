@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using Android.App;
+using Android.OS;
+using Android.Widget;
+using Xamarin.Essentials;
 
 namespace CzyDojade
 {
-    public class RestoringPassword 
+    [Activity(Label = "Przypomnienie Hasła")]
+    public class RestoringPassword
     {
-        public RestoringPassword()
-        {
-            
-        }
-    }
+
+    }   
+     
+        
+    
+    
 }
+
