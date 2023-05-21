@@ -65,6 +65,7 @@ namespace CzyDojade
             #region Buttons etc.
             var logoutButton = FindViewById<Button>(Resource.Id.logout);
             var avatarButton = FindViewById<Button>(Resource.Id.change_avatar);
+            var mapButton = FindViewById<ImageButton>(Resource.Id.menu_map);
             #endregion
 
             #region Functionality of Buttons
@@ -90,6 +91,15 @@ namespace CzyDojade
 
                 // Start the image picker activity
                 StartActivityForResult(imagePickerIntent, 0);
+            };
+
+            // Define the click event handler for the 'map' button
+            mapButton.Click += (sender, e) =>
+            {
+                // Start the Map activity
+                var intent = new Intent(this, typeof(MapScreen));
+                StartActivity(intent);
+                OverridePendingTransition(0, 0);
             };
             #endregion
         }

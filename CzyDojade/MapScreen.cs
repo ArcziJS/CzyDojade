@@ -387,6 +387,17 @@ namespace CzyDojade
             }
 
             #endregion
+
+            #region Bottom navigation bar
+            ImageButton SettingsButton = FindViewById<ImageButton>(Resource.Id.menu_settings);
+            SettingsButton.Click += delegate
+            {
+                StartActivity(typeof(UserSettingsPage));
+                OverridePendingTransition(0, 0);
+            };
+
+
+            #endregion
         }
 
     }
