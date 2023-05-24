@@ -21,6 +21,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+#pragma warning disable CS0618
+
 namespace CzyDojade
 {
     [Activity(Label = "Activity1")]

@@ -6,6 +6,8 @@ using Android.Preferences;
 using Android.Widget;
 using MySqlConnector;
 
+#pragma warning disable CS0618
+
 namespace CzyDojade
 {
     [Activity(Label = "LoginScreen", Theme = "@style/AppTheme")]
