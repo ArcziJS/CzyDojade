@@ -11,10 +11,11 @@ using System.Runtime.InteropServices;
 namespace CzyDojade
 {
     [Activity(Label = "RestoringPassword")]
-    public class RestorePassword
+    public class RestorePassword : Activity
     {
-
-        protected void OnCreate(Bundle savedInstanceState)
+        EditText EmailEntry;
+        Button SendButton;
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.restoring_password);
@@ -24,58 +25,67 @@ namespace CzyDojade
             {
                 connection.Open();
 
-                Button SendButton = FindViewById<Button>(Resource.Id.SendButton);
-                EditText EmailEntry = FindViewById<EditText>(Resource.Id.EmailEntry);
+                SendButton = FindViewById<Button>(Resource.Id.SendButton);
+                EmailEntry = FindViewById<EditText>(Resource.Id.EmailEntry);
 
                 // Dodaj tutaj logikę obsługującą zdarzenie kliknięcia przycisku SendButton
+                SendButton.Click += delegate
+                {
+                    string email = EmailEntry.Text; // Pobierz adres e-mail z pola wprowadzania
 
+                    // Sprawdź, czy podano poprawny adres e-mail
+                    if (!IsValidEmail(email))
+                    {
+                        Toast.MakeText(this, "Podaj poprawny adres e-mail.", ToastLength.Short).Show();
+                        //DisplayAlert("Błąd", , "OK");
+                        return;
+                    }
+
+                    // Wygeneruj nowe hasło dla użytkownika (możesz użyć dowolnego mechanizmu do generowania hasła)
+
+                    string newPassword = GenerateNewPassword();
+
+                    // Wyślij e-mail z nowym hasłem do użytkownika
+
+                    string smtpServer = "smtp.poczta.onet.pl"; // Serwer SMTP używany do wysyłania wiadomości e-mail
+                    string smtpUsername = "czydojade"; // Nazwa użytkownika SMTP
+                    string smtpPassword = "CzyDojade123!"; // Hasło SMTP
+
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
+                        SmtpClient smtpClient = new SmtpClient(smtpServer);
+
+                        mail.From = new MailAddress(smtpUsername);
+                        mail.To.Add(email);
+                        mail.Subject = "Przypomnienie hasła";
+                        mail.Body = "Twoje nowe hasło: " + newPassword;
+
+                        smtpClient.Port = 587; // Port SMTP
+                        smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+                        smtpClient.EnableSsl = true; // Włącz SSL, jeśli wymagane
+
+                        smtpClient.Send(mail);
+
+                        Toast.MakeText(this, "E-mail z nowym hasłem został wysłany.", ToastLength.Short).Show();
+                        //DisplayAlert("Sukces", , "OK");
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+
+                        //DisplayAlert("Błąd", "Wystąpił błąd podczas wysyłania e-maila: " + ex.Message, "OK");
+                    }
+                };
+                //SendButton_Clicked(object sender, EventArgs e)
+                //{
+                    
+                //}
             }
         }
 
-        private void SendButton_Clicked(object sender, EventArgs e)
-            {
-                string email = EmailEntry.Text; // Pobierz adres e-mail z pola wprowadzania
-
-                // Sprawdź, czy podano poprawny adres e-mail
-                if (!IsValidEmail(email))
-                {
-                    DisplayAlert("Błąd", "Podaj poprawny adres e-mail.", "OK");
-                    return;
-                }
-
-                // Wygeneruj nowe hasło dla użytkownika (możesz użyć dowolnego mechanizmu do generowania hasła)
-
-                string newPassword = GenerateNewPassword();
-
-                // Wyślij e-mail z nowym hasłem do użytkownika
-
-                string smtpServer = "smtp.poczta.onet.pll"; // Serwer SMTP używany do wysyłania wiadomości e-mail
-                string smtpUsername = "czydojade"; // Nazwa użytkownika SMTP
-                string smtpPassword = "CzyDojade123!"; // Hasło SMTP
-
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient smtpClient = new SmtpClient(smtpServer);
-
-                    mail.From = new MailAddress(smtpUsername);
-                    mail.To.Add(email);
-                    mail.Subject = "Przypomnienie hasła";
-                    mail.Body = "Twoje nowe hasło: " + newPassword;
-
-                    smtpClient.Port = 587; // Port SMTP
-                    smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                    smtpClient.EnableSsl = true; // Włącz SSL, jeśli wymagane
-
-                    smtpClient.Send(mail);
-
-                    DisplayAlert("Sukces", "E-mail z nowym hasłem został wysłany.", "OK");
-                }
-                catch (Exception ex)
-                {
-                    DisplayAlert("Błąd", "Wystąpił błąd podczas wysyłania e-maila: " + ex.Message, "OK");
-                }
-            }
+        
+       
 
             private bool IsValidEmail(string email)
             {

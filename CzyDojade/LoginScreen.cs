@@ -63,6 +63,11 @@ namespace CzyDojade
             {
                 StartActivity(typeof(RegisterScreen));
             };
+
+            ButtonLogin3.Click += delegate
+            {
+                StartActivity(typeof(RestorePassword));
+            };
         }
 
         protected override void OnResume()
