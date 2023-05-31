@@ -59,11 +59,11 @@ namespace CzyDojade
             var hour = DateTime.Now.Hour;
             if (hour >= 6 && hour < 18)
             {
-                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/light-v10"));
+                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/czydojade/clic6g98n000701pa7meff0y1"));
             }
             else
             {
-                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/mapbox/dark-v10"));
+                mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/czydojade/clic6mo3l000701qv4gvhg52k"));
             }
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
