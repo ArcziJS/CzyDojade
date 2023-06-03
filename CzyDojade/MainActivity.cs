@@ -19,7 +19,7 @@ namespace CzyDojade
 
             ImageButton selectCarButton = FindViewById<ImageButton>(Resource.Id.SelectCarButton);
 
-            await Task.Delay(1000); 
+            await Task.Delay(1000);
 
             StartActivity(typeof(LoginScreen));
         }

@@ -1,11 +1,9 @@
 ﻿using Android.App;
 using Android.Graphics;
 using Android.Locations;
-using Android.Opengl;
 using Android.OS;
 using Android.Views.InputMethods;
 using Android.Widget;
-using Com.Mapbox.Api.Directions.V5;
 using Com.Mapbox.Core.Constants;
 using Com.Mapbox.Geojson.Utils;
 using Com.Mapbox.Mapboxsdk.Annotations;
@@ -34,10 +32,10 @@ namespace CzyDojade
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
         List<Polyline> polylines = new List<Polyline>();
-        Dictionary<long, Tuple<Marker,Polyline>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline>>();
+        Dictionary<long, Tuple<Marker, Polyline>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline>>();
 
         int evChargesNeeded;
-         int maxMarkerCount = 2;
+        int maxMarkerCount = 2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -296,6 +294,7 @@ namespace CzyDojade
 
             void MoveCamera(LatLng position)
             {
+                ClearPolylines();
                 ResetCameraAngle();
                 mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(position, 15), 5000);
                 CreateMarker(position);
@@ -303,6 +302,7 @@ namespace CzyDojade
 
             void MoveCameraBetween(LatLng position1, LatLng position2)
             {
+                ClearPolylines();
                 ResetCameraAngle();
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 builder.Include(position1);
@@ -350,7 +350,7 @@ namespace CzyDojade
 
             void ClearMarkers()
             {
-                foreach(var marker in markers)
+                foreach (var marker in markers)
                 {
                     mapboxMap.RemoveMarker(marker);
                 }
@@ -484,7 +484,7 @@ namespace CzyDojade
                                     Polyline selectedRoute = mapboxMap.AddPolyline(polylineOptions);
                                     polylines.Add(selectedRoute);
 
-                                    double bearing = BearingCalculator.CalculateBearing(routeStart, chosenPolyline.Points.Last());
+                                    double bearing = BearingCalculator.CalculateBearing(routeStart, chosenPolyline.Points[1]);
 
                                     CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .Target(routeStart)
@@ -509,7 +509,7 @@ namespace CzyDojade
                         await GetRoute(routeStart, routeEnd);
                     }
 
-                    
+
                     mapboxMap.SelectMarker(chosenMarker);
                 };
             }

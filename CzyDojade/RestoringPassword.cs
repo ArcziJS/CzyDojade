@@ -1,13 +1,11 @@
-﻿using System;
-using Android.App;
-using Android.Widget;
+﻿using Android.App;
 using Android.OS;
-using Android.Preferences;
-using System.Net.Mail;
-using System.Net;
+using Android.Widget;
 using MySqlConnector;
-using System.Runtime.InteropServices;
-using Android.Views;
+using System;
+using System.Net;
+using System.Net.Mail;
+using Xamarin.Essentials;
 
 #pragma warning disable CS0618
 

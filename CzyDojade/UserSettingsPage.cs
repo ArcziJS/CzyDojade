@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Preferences;
-using Android.Provider;
 using Android.Widget;
 using MySqlConnector;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 #pragma warning disable CS0618
 

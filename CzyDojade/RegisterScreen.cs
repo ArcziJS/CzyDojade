@@ -2,7 +2,6 @@
 using Android.OS;
 using Android.Widget;
 using MySqlConnector;
-using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace CzyDojade
 {

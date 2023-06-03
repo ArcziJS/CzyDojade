@@ -1,8 +1,6 @@
-﻿using MySqlConnector;
+﻿using Android.Graphics.Drawables;
+using MySqlConnector;
 using System.IO;
-using Java.IO;
-using System.Threading.Tasks;
-using Android.Graphics.Drawables;
 using System.Net;
 
 namespace CzyDojade

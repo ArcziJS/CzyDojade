@@ -1,14 +1,5 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Com.Mapbox.Mapboxsdk.Geometry;
+﻿using Com.Mapbox.Mapboxsdk.Geometry;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CzyDojade
 {
@@ -22,7 +13,7 @@ namespace CzyDojade
             double lon2 = DegreesToRadians(end.Longitude);
 
             double y = Math.Sin(lon2 - lon1) * Math.Cos(lat2);
-            double x = Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(lon2 - lon1);
+            double x = (Math.Cos(lat1) * Math.Sin(lat2)) - (Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(lon2 - lon1));
             double bearing = Math.Atan2(y, x);
 
             bearing = RadiansToDegrees(bearing);
