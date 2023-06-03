@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static Com.Mapbox.Mapboxsdk.Maps.MapboxMap;
 
 #pragma warning disable CS0618
 
@@ -32,9 +33,11 @@ namespace CzyDojade
         LatLng routeStart;
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
+        List<Polyline> polylines = new List<Polyline>();
+        Dictionary<long, Tuple<Marker,Polyline>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline>>();
 
         int evChargesNeeded;
-
+         int maxMarkerCount = 2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -293,12 +296,14 @@ namespace CzyDojade
 
             void MoveCamera(LatLng position)
             {
+                ResetCameraAngle();
                 mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(position, 15), 5000);
                 CreateMarker(position);
             }
 
             void MoveCameraBetween(LatLng position1, LatLng position2)
             {
+                ResetCameraAngle();
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 builder.Include(position1);
                 builder.Include(position2);
@@ -310,6 +315,17 @@ namespace CzyDojade
 
                 CreateMarker(position1);
                 CreateMarker(position2);
+            }
+
+            void ResetCameraAngle()
+            {
+                CameraPosition position = new CameraPosition.Builder()
+                    .Target(mapboxMap.CameraPosition.Target)
+                    .Zoom(mapboxMap.CameraPosition.Zoom)
+                    .Bearing(0)
+                    .Tilt(0)
+                    .Build();
+                mapboxMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(position));
             }
 
             void CreateMarker(LatLng position)
@@ -324,8 +340,6 @@ namespace CzyDojade
                 Marker marker = mapboxMap.AddMarker(markerOptions);
                 markers.Add(marker);
 
-                int maxMarkerCount = 2;
-
                 if (markers.Count > maxMarkerCount)
                 {
                     Marker oldestMarker = markers[0];
@@ -334,26 +348,38 @@ namespace CzyDojade
                 }
             }
 
+            void ClearMarkers()
+            {
+                foreach(var marker in markers)
+                {
+                    mapboxMap.RemoveMarker(marker);
+                }
+                markers.Clear();
+            }
+
             #region Destination
 
             async Task GetRoute(LatLng routeStart, LatLng routeEnd)
             {
-                var polylines = mapboxMap.Polylines;
-                foreach (var polyline in polylines)
-                {
-                    mapboxMap.RemovePolyline(polyline);
-                }
+                ClearPolylines();
+                ClearMarkers();
+                CreateMarker(routeStart);
+                CreateMarker(routeEnd);
 
                 var baseUrl = "https://api.mapbox.com/directions/v5";
                 var accessToken = "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ";
 
                 var routeOptions = new List<string>()
-                    {
-                        "driving",
-                        "driving-traffic",
-                        "walking",
-                        "cycling"
-                    };
+    {
+        "driving",
+        "driving-traffic",
+        "walking",
+        "cycling"
+    };
+
+                IconFactory iconFactory = IconFactory.GetInstance(this);
+                Icon icon = iconFactory.FromResource(Resource.Drawable.route_info);
+                icon = iconFactory.FromBitmap(Bitmap.CreateScaledBitmap(icon.Bitmap, 50, 50, false));
 
                 foreach (var option in routeOptions)
                 {
@@ -373,26 +399,37 @@ namespace CzyDojade
                                     .Select(p => new LatLng(p.Latitude(), p.Longitude()))
                                     .ToList();
 
-                                // Assign route length to variable double routeLengthKm
                                 double routeLengthKm = currentRoute.Distance / 1000;
 
-                                // Calculate EV charges needed (example calculation, adjust according to your requirements)
                                 evChargesNeeded = (int)Math.Ceiling(routeLengthKm / 350);
 
-                                // Update TextViews
                                 routeLengthTextView.Text = $"{routeLengthKm:F2} km";
                                 evChargesTextView.Text = $"{evChargesNeeded}";
 
-                                var polylineOptions = new PolylineOptions()
+                                int middlePointIndex = points.Count / 2;
+                                LatLng middlePoint = points[middlePointIndex];
+                                middlePoint = new LatLng(middlePoint.Latitude * 10, middlePoint.Longitude * 10);
+
+                                MarkerOptions markerOptions = (MarkerOptions)new MarkerOptions()
+                                    .SetPosition(middlePoint)
+                                    .SetTitle($"{Math.Ceiling(currentRoute.Duration / 60)} min")
+                                    .SetSnippet($"{Math.Floor(routeLengthKm)} km")
+                                    .SetIcon(icon);
+
+                                Marker marker = mapboxMap.AddMarker(markerOptions);
+                                markers.Add(marker);
+
+                                PolylineOptions routePolylineOptions = new PolylineOptions()
                                     .InvokeColor(Color.Blue)
                                     .InvokeWidth(5);
-
                                 foreach (var point in points)
                                 {
-                                    polylineOptions.Add(new LatLng(point.Latitude * 10, point.Longitude * 10));
+                                    routePolylineOptions.Add(new LatLng(point.Latitude * 10, point.Longitude * 10));
                                 }
+                                Polyline polyline = mapboxMap.AddPolyline(routePolylineOptions);
+                                polylines.Add(polyline);
 
-                                mapboxMap.AddPolyline(polylineOptions);
+                                markersRoutes.Add(marker.Id, new Tuple<Marker, Polyline>(marker, polyline));
                             }
                         }
                         else
@@ -401,9 +438,90 @@ namespace CzyDojade
                         }
                     }
                 }
+
+                string lastPressedMarkerId = null;
+                Dictionary<string, int> markerPressCount = new Dictionary<string, int>();
+
+                mapboxMap.MarkerClick += async delegate (object sender, MarkerClickEventArgs e)
+                {
+                    var selectedMarker = e.P0;
+                    Tuple<Marker, Polyline> pair = markersRoutes[selectedMarker.Id];
+                    Marker chosenMarker = pair.Item1;
+                    Polyline chosenPolyline = pair.Item2;
+
+                    string markerId = selectedMarker.Id.ToString();
+
+                    try
+                    {
+                        if (lastPressedMarkerId != markerId)
+                        {
+                            lastPressedMarkerId = markerId;
+                            markerPressCount.Clear();
+                        }
+
+                        if (!markerPressCount.ContainsKey(markerId))
+                        {
+                            markerPressCount[markerId] = 1;
+                        }
+                        else
+                        {
+                            markerPressCount[markerId]++;
+                            if (markerPressCount[markerId] % 2 == 0)
+                            {
+                                ClearPolylines();
+                                ClearMarkers();
+                                try
+                                {
+                                    PolylineOptions polylineOptions = new PolylineOptions()
+                                        .InvokeColor(Color.Blue)
+                                        .InvokeWidth(5);
+
+                                    foreach (var point in chosenPolyline.Points)
+                                    {
+                                        polylineOptions.Add(new LatLng(point.Latitude, point.Longitude));
+                                    }
+
+                                    Polyline selectedRoute = mapboxMap.AddPolyline(polylineOptions);
+                                    polylines.Add(selectedRoute);
+
+                                    double bearing = BearingCalculator.CalculateBearing(routeStart, chosenPolyline.Points.Last());
+
+                                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .Target(routeStart)
+                                        .Tilt(45.0)
+                                        .Zoom(18.0)
+                                        .Bearing(bearing)
+                                        .Build();
+
+                                    mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
+                                }
+                                catch (Exception ex)
+                                {
+                                    Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
+                                    await GetRoute(routeStart, routeEnd);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
+                        await GetRoute(routeStart, routeEnd);
+                    }
+
+                    
+                    mapboxMap.SelectMarker(chosenMarker);
+                };
             }
 
-
+            void ClearPolylines()
+            {
+                foreach (var polyline in polylines)
+                {
+                    mapboxMap.RemovePolyline(polyline);
+                }
+                polylines.Clear();
+            }
 
             #endregion
 
@@ -419,6 +537,10 @@ namespace CzyDojade
             #endregion
         }
 
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            mapView.OnSaveInstanceState(outState);
+        }
     }
-
 }
