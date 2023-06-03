@@ -14,6 +14,8 @@ using Android.Widget;
 using MySqlConnector;
 using Newtonsoft.Json;
 
+#pragma warning disable CS0618
+
 namespace CzyDojade
 {
     [Activity(Label = "UserSettingsPage")]
@@ -83,7 +85,7 @@ namespace CzyDojade
             };
 
             // Define the click event handler for the 'change avatar' button
-            avatarButton.Click += async (sender, e) =>
+            avatarButton.Click += (sender, e) =>
             {
                 // Create a new intent to open the image picker
                 var imagePickerIntent = new Intent(Intent.ActionPick);

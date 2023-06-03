@@ -9,6 +9,8 @@ using MySqlConnector;
 using System.Runtime.InteropServices;
 using Android.Views;
 
+#pragma warning disable CS0618
+
 namespace CzyDojade
 {
     [Activity(Label = "RestoringPassword")]

@@ -14,7 +14,7 @@ namespace CzyDojade
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.1.0.5")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.2.0.99")]
 	public partial class Resource
 	{
 		
@@ -9189,34 +9189,37 @@ namespace CzyDojade
 			public const int rounded_rectangle_light = 2131165437;
 			
 			// aapt resource value: 0x7F0700FE
-			public const int settings = 2131165438;
+			public const int route_info = 2131165438;
 			
 			// aapt resource value: 0x7F0700FF
-			public const int target = 2131165439;
+			public const int settings = 2131165439;
 			
 			// aapt resource value: 0x7F070100
-			public const int tesla_model_3_outline = 2131165440;
+			public const int target = 2131165440;
 			
 			// aapt resource value: 0x7F070101
-			public const int tesla_model_s_outline = 2131165441;
+			public const int tesla_model_3_outline = 2131165441;
 			
 			// aapt resource value: 0x7F070102
-			public const int tesla_model_x_outline = 2131165442;
+			public const int tesla_model_s_outline = 2131165442;
 			
 			// aapt resource value: 0x7F070103
-			public const int tesla_model_y_outline = 2131165443;
+			public const int tesla_model_x_outline = 2131165443;
 			
 			// aapt resource value: 0x7F070104
-			public const int test_level_drawable = 2131165444;
+			public const int tesla_model_y_outline = 2131165444;
 			
 			// aapt resource value: 0x7F070105
-			public const int thunder = 2131165445;
+			public const int test_level_drawable = 2131165445;
 			
 			// aapt resource value: 0x7F070106
-			public const int tooltip_frame_dark = 2131165446;
+			public const int thunder = 2131165446;
 			
 			// aapt resource value: 0x7F070107
-			public const int tooltip_frame_light = 2131165447;
+			public const int tooltip_frame_dark = 2131165447;
+			
+			// aapt resource value: 0x7F070108
+			public const int tooltip_frame_light = 2131165448;
 			
 			static Drawable()
 			{
