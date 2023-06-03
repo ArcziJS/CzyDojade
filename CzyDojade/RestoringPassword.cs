@@ -2,11 +2,12 @@
 using Android.App;
 using Android.Widget;
 using Android.OS;
+using Android.Preferences;
 using System.Net.Mail;
 using System.Net;
-using Android.Preferences;
 using MySqlConnector;
 using System.Runtime.InteropServices;
+using Android.Views;
 
 namespace CzyDojade
 {
@@ -15,6 +16,7 @@ namespace CzyDojade
     {
         EditText EmailEntry;
         Button SendButton;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -28,88 +30,79 @@ namespace CzyDojade
                 SendButton = FindViewById<Button>(Resource.Id.SendButton);
                 EmailEntry = FindViewById<EditText>(Resource.Id.EmailEntry);
 
-                // Dodaj tutaj logikę obsługującą zdarzenie kliknięcia przycisku SendButton
-                SendButton.Click += delegate
-                {
-                    string email = EmailEntry.Text; // Pobierz adres e-mail z pola wprowadzania
-
-                    // Sprawdź, czy podano poprawny adres e-mail
-                    if (!IsValidEmail(email))
-                    {
-                        Toast.MakeText(this, "Podaj poprawny adres e-mail.", ToastLength.Short).Show();
-                        //DisplayAlert("Błąd", , "OK");
-                        return;
-                    }
-
-                    // Wygeneruj nowe hasło dla użytkownika (możesz użyć dowolnego mechanizmu do generowania hasła)
-
-                    string newPassword = GenerateNewPassword();
-
-                    // Wyślij e-mail z nowym hasłem do użytkownika
-
-                    string smtpServer = "smtp.poczta.onet.pl"; // Serwer SMTP używany do wysyłania wiadomości e-mail
-                    string smtpUsername = "czydojade"; // Nazwa użytkownika SMTP
-                    string smtpPassword = "CzyDojade123!"; // Hasło SMTP
-
-                    try
-                    {
-                        MailMessage mail = new MailMessage();
-                        SmtpClient smtpClient = new SmtpClient(smtpServer);
-
-                        mail.From = new MailAddress(smtpUsername);
-                        mail.To.Add(email);
-                        mail.Subject = "Przypomnienie hasła";
-                        mail.Body = "Twoje nowe hasło: " + newPassword;
-
-                        smtpClient.Port = 587; // Port SMTP
-                        smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                        smtpClient.EnableSsl = true; // Włącz SSL, jeśli wymagane
-
-                        smtpClient.Send(mail);
-
-                        Toast.MakeText(this, "E-mail z nowym hasłem został wysłany.", ToastLength.Short).Show();
-                        //DisplayAlert("Sukces", , "OK");
-                    }
-                    catch (Exception ex)
-                    {
-                        Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
-
-                        //DisplayAlert("Błąd", "Wystąpił błąd podczas wysyłania e-maila: " + ex.Message, "OK");
-                    }
-                };
-                //SendButton_Clicked(object sender, EventArgs e)
-                //{
-                    
-                //}
+                SendButton.Click += ResetPasswordButton_Clicked;
             }
         }
 
-        
-       
-
-            private bool IsValidEmail(string email)
+        private void ResetPasswordButton_Clicked(object sender, EventArgs e)
+        {
+            if (!IsValidEmail(EmailEntry.Text))
             {
-                try
-                {
-                    var addr = new MailAddress(email);
-                    return addr.Address == email;
-                }
-                catch
-                {
-                    return false;
-                }
+                Toast.MakeText(this, "Podaj poprawny adres e-mail.", ToastLength.Short).Show();
+                return;
             }
 
+            string resetToken = GenerateResetToken();
+            SaveResetToken(resetToken);
+            SendResetEmail(EmailEntry.Text, resetToken);
 
-            private string GenerateNewPassword()
+            Toast.MakeText(this, "Wiadomość e-mail z linkiem resetującym hasło została wysłana.", ToastLength.Short).Show();
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
             {
-                // Implementacja generowania nowego hasła
-                // Możesz użyć np. biblioteki Random lub innych mechanizmów do generowania losowych ciągów znaków
-                return "newpassword123";
+                var addr = new MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private string GenerateResetToken()
+        {
+            string resetToken = Guid.NewGuid().ToString();
+            return resetToken;
+        }
+
+        private void SaveResetToken(string resetToken)
+        {
+            // Zapisz resetToken w lokalnej bazie danych, na przykład w SharedPreferences lub App Properties
+            Preferences.Set("ResetToken", resetToken);
+        }
+
+        private void SendResetEmail(string emailAddress, string resetToken)
+        {
+            // Wysyłanie wiadomości e-mail z linkiem resetującym hasło
+            // Możesz skorzystać z usługi zewnętrznej do wysyłania wiadomości e-mail lub użyć wbudowanych możliwości Xamarin
+
+            string smtpServer = "smtp.poczta.onet.pl"; // Serwer SMTP używany do wysyłania wiadomości e-mail
+            string smtpUsername = "czydojade"; // Nazwa użytkownika SMTP
+            string smtpPassword = "CzyDojade123!"; // Hasło SMTP
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpClient = new SmtpClient(smtpServer);
+
+                mail.From = new MailAddress(smtpUsername);
+                mail.To.Add(emailAddress);
+                mail.Subject = "Resetowanie hasła";
+                mail.Body = $"Kliknij poniższy link, aby zresetować hasło: {resetToken}";
+
+                smtpClient.Port = 465; // Port SMTP
+                smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+                smtpClient.EnableSsl = true; // Włącz SSL, jeśli wymagane
+
+                smtpClient.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, "Wystąpił błąd podczas wysyłania wiadomości e-mail: " + ex.Message, ToastLength.Short).Show();
             }
         }
     }
-
-
-
-
+}
