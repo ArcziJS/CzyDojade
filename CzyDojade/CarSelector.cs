@@ -47,6 +47,7 @@ namespace CzyDojade
                 selectCarButtons[i] = FindViewById<Button>(GetButtonSelectCarId(i + 1));
                 selectCarButtons[i].Click += delegate
                 {
+                    InitializeConnection();
                     StartActivity(typeof(MapScreen));
                 };
             }
@@ -59,8 +60,8 @@ namespace CzyDojade
 
         private void InitializeConnection()
         {
-            connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
-            connection.Open();
+            this.connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
+            this.connection.Open();
         }
 
         private async Task LoadCarsAsync()
@@ -70,7 +71,7 @@ namespace CzyDojade
             // Load car details asynchronously
             for (int i = 0; i < 11; i++)
             {
-                cars[i] = await new Car().LoadCarDetailsAsync(connection, i + 1);
+                cars[i] = await new Car().LoadCarDetailsAsync(this.connection, i + 1);
             }
 
             // Display car details
