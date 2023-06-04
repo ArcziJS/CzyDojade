@@ -3,10 +3,12 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Preferences;
+using Android.Views;
 using Android.Widget;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -59,12 +61,114 @@ namespace CzyDojade
 
             var emailTextView = FindViewById<TextView>(Resource.Id.email);
             emailTextView.Text = $"{userEmail}";
+
+            // Retrieve the user ID from the database using the user's email
+            int userId;
+            using (var getUserIdCommand = connection.CreateCommand())
+            {
+                getUserIdCommand.CommandText = "SELECT id FROM uzytkownik WHERE Email = @Email";
+                getUserIdCommand.Parameters.AddWithValue("@Email", userEmail);
+                userId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
+            }
+
+            // Retrieve the matching car IDs for the user from the database
+            List<int> carIds = new List<int>();
+            using (var getCarIdsCommand = connection.CreateCommand())
+            {
+                getCarIdsCommand.CommandText = "SELECT samochod_id FROM uzytkownicy_samochody WHERE uzytkownik_id = @UserId";
+                getCarIdsCommand.Parameters.AddWithValue("@UserId", userId);
+                using (var reader = getCarIdsCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        carIds.Add(reader.GetInt32(0));
+                    }
+                }
+            }
+
+            // Get the car_section LinearLayout from the layout
+            LinearLayout carSection = FindViewById<LinearLayout>(Resource.Id.car_section);
+
+
+            // Iterate over the list of car IDs and retrieve the car data from the database
+            foreach (int carId in carIds)
+            {
+                using (var getCarDataCommand = connection.CreateCommand())
+                {
+                    getCarDataCommand.CommandText = "SELECT marka, model, zasieg, ikona FROM samochody WHERE id = @CarId";
+                    getCarDataCommand.Parameters.AddWithValue("@CarId", carId);
+                    using (var reader = getCarDataCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Create a new LinearLayout to hold car details
+                            LinearLayout carLayout = new LinearLayout(this);
+                            carLayout.Orientation = Orientation.Horizontal;
+                            carLayout.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MatchParent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            carLayout.SetPadding(16, 16, 16, 16); 
+                            carLayout.SetBackgroundColor(Color.Rgb(44, 62, 80)); 
+
+                            // Create a LinearLayout to hold the car information
+                            LinearLayout carInfoLayout = new LinearLayout(this);
+                            carInfoLayout.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WrapContent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            carInfoLayout.Orientation = Orientation.Vertical;
+                            carInfoLayout.SetPadding(16, 0, 0, 0); 
+
+                            // Create a TextView for the car make and model
+                            TextView carMakeModel = new TextView(this);
+                            carMakeModel.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WrapContent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            carMakeModel.Text = $"{reader.GetString(0)} {reader.GetString(1)}";
+                            carMakeModel.SetTextAppearance(this, Android.Resource.Style.TextAppearanceMedium);
+                            carMakeModel.SetTextColor(Color.White); 
+                            carMakeModel.SetTypeface(carMakeModel.Typeface, TypefaceStyle.Bold); 
+                            carInfoLayout.AddView(carMakeModel);
+
+                            // Create a TextView for the car range
+                            TextView carRange = new TextView(this);
+                            carRange.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WrapContent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            carRange.Text = $"Zasięg: {reader.GetString(2)} km";
+                            carRange.SetTextAppearance(this, Android.Resource.Style.TextAppearanceSmall);
+                            carRange.SetTextColor(Color.White); 
+                            carInfoLayout.AddView(carRange);
+
+                            carLayout.AddView(carInfoLayout);
+
+                            // Add margin to the carLayout
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MatchParent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            layoutParams.SetMargins(32, 0, 32, 16); 
+                            carLayout.LayoutParameters = layoutParams;
+
+                            // Add the carLayout to the car_section LinearLayout
+                            carSection.AddView(carLayout);
+                        }
+                    }
+                }
+            }
+
+
+
             #endregion
 
             #region Buttons etc.
             var logoutButton = FindViewById<Button>(Resource.Id.logout);
             var avatarButton = FindViewById<Button>(Resource.Id.change_avatar);
             var mapButton = FindViewById<ImageButton>(Resource.Id.menu_map);
+            var carSelectorButton = FindViewById<Button>(Resource.Id.select_car);
             #endregion
 
             #region Functionality of Buttons
@@ -97,6 +201,13 @@ namespace CzyDojade
             {
                 // Start the Map activity
                 var intent = new Intent(this, typeof(MapScreen));
+                StartActivity(intent);
+                OverridePendingTransition(0, 0);
+            };
+
+            carSelectorButton.Click += (sender, e) =>
+            {
+                var intent = new Intent(this, typeof(CarSelector));
                 StartActivity(intent);
                 OverridePendingTransition(0, 0);
             };
@@ -133,9 +244,6 @@ namespace CzyDojade
                 Console.WriteLine(ex.Message);
             }
         }
-
-
-
 
         // Handle the result of the image picker activity
         protected override async void OnActivityResult(int requestCode, Result resultCode, Intent data)

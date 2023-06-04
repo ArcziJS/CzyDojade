@@ -2,227 +2,123 @@
 using Android.OS;
 using Android.Widget;
 using MySqlConnector;
+using System.Threading.Tasks;
+using Android.Content;
+using Android.Preferences;
+
 
 namespace CzyDojade
 {
     [Activity(Label = "CarSelector", Theme = "@style/AppTheme")]
     public class CarSelector : Activity
     {
+        private MySqlConnection connection;
+        private ImageView[] imageViews;
+        private TextView[] producerModelTextViews;
+        private TextView[] rangeTextViews;
+        private Button[] selectCarButtons;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.car_selection);
 
-            #region TextViews car producer + model
+            InitializeViews();
+            InitializeConnection();
 
-            TextView TextViewCar1 = FindViewById<TextView>(Resource.Id.textViewCar1);
-            TextView TextViewCar2 = FindViewById<TextView>(Resource.Id.textViewCar2);
-            TextView TextViewCar3 = FindViewById<TextView>(Resource.Id.textViewCar3);
-            TextView TextViewCar4 = FindViewById<TextView>(Resource.Id.textViewCar4);
-            TextView TextViewCar5 = FindViewById<TextView>(Resource.Id.textViewCar5);
-            TextView TextViewCar6 = FindViewById<TextView>(Resource.Id.textViewCar6);
-            TextView TextViewCar7 = FindViewById<TextView>(Resource.Id.textViewCar7);
-            TextView TextViewCar8 = FindViewById<TextView>(Resource.Id.textViewCar8);
-            TextView TextViewCar9 = FindViewById<TextView>(Resource.Id.textViewCar9);
-            TextView TextViewCar10 = FindViewById<TextView>(Resource.Id.textViewCar10);
-            TextView TextViewCar11 = FindViewById<TextView>(Resource.Id.textViewCar11);
+            LoadCarsAsync();
+        }
 
-            #endregion
+        private void InitializeViews()
+        {
+            // Initialize arrays
+            imageViews = new ImageView[11];
+            producerModelTextViews = new TextView[11];
+            rangeTextViews = new TextView[11];
+            selectCarButtons = new Button[11];
 
-            #region TextViews car range
+            // Assign TextViews, ImageViews, and Buttons
+            for (int i = 0; i < 11; i++)
+            {
+                producerModelTextViews[i] = FindViewById<TextView>(GetTextViewCarId(i + 1));
+                rangeTextViews[i] = FindViewById<TextView>(GetTextViewRangeId(i + 1));
+                imageViews[i] = FindViewById<ImageView>(GetImageViewId(i + 1));
+                selectCarButtons[i] = FindViewById<Button>(GetButtonSelectCarId(i + 1));
+                selectCarButtons[i].Click += delegate
+                {
+                    StartActivity(typeof(MapScreen));
+                };
+            }
 
-            TextView TextViewRange1 = FindViewById<TextView>(Resource.Id.textViewRange1);
-            TextView TextViewRange2 = FindViewById<TextView>(Resource.Id.textViewRange2);
-            TextView TextViewRange3 = FindViewById<TextView>(Resource.Id.textViewRange3);
-            TextView TextViewRange4 = FindViewById<TextView>(Resource.Id.textViewRange4);
-            TextView TextViewRange5 = FindViewById<TextView>(Resource.Id.textViewRange5);
-            TextView TextViewRange6 = FindViewById<TextView>(Resource.Id.textViewRange6);
-            TextView TextViewRange7 = FindViewById<TextView>(Resource.Id.textViewRange7);
-            TextView TextViewRange8 = FindViewById<TextView>(Resource.Id.textViewRange8);
-            TextView TextViewRange9 = FindViewById<TextView>(Resource.Id.textViewRange9);
-            TextView TextViewRange10 = FindViewById<TextView>(Resource.Id.textViewRange10);
-            TextView TextViewRange11 = FindViewById<TextView>(Resource.Id.textViewRange11);
+            int GetTextViewCarId(int carIndex) => (int)typeof(Resource.Id).GetField($"textViewCar{carIndex}").GetValue(null);
+            int GetTextViewRangeId(int carIndex) => (int)typeof(Resource.Id).GetField($"textViewRange{carIndex}").GetValue(null);
+            int GetImageViewId(int carIndex) => (int)typeof(Resource.Id).GetField($"imageView{carIndex}").GetValue(null);
+            int GetButtonSelectCarId(int carIndex) => (int)typeof(Resource.Id).GetField($"buttonSelectCar{carIndex}").GetValue(null);
+        }
 
-            #endregion
-
-            #region ImageViews
-
-            ImageView ImageView1 = FindViewById<ImageView>(Resource.Id.imageView1);
-            ImageView ImageView2 = FindViewById<ImageView>(Resource.Id.imageView2);
-            ImageView ImageView3 = FindViewById<ImageView>(Resource.Id.imageView3);
-            ImageView ImageView4 = FindViewById<ImageView>(Resource.Id.imageView4);
-            ImageView ImageView5 = FindViewById<ImageView>(Resource.Id.imageView5);
-            ImageView ImageView6 = FindViewById<ImageView>(Resource.Id.imageView6);
-            ImageView ImageView7 = FindViewById<ImageView>(Resource.Id.imageView7);
-            ImageView ImageView8 = FindViewById<ImageView>(Resource.Id.imageView8);
-            ImageView ImageView9 = FindViewById<ImageView>(Resource.Id.imageView9);
-            ImageView ImageView10 = FindViewById<ImageView>(Resource.Id.imageView10);
-            ImageView ImageView11 = FindViewById<ImageView>(Resource.Id.imageView11);
-
-
-            #endregion
-
-            #region Buttons car select
-
-            Button ButtonSelectCar1 = FindViewById<Button>(Resource.Id.buttonSelectCar1);
-            Button ButtonSelectCar2 = FindViewById<Button>(Resource.Id.buttonSelectCar2);
-            Button ButtonSelectCar3 = FindViewById<Button>(Resource.Id.buttonSelectCar3);
-            Button ButtonSelectCar4 = FindViewById<Button>(Resource.Id.buttonSelectCar4);
-            Button ButtonSelectCar5 = FindViewById<Button>(Resource.Id.buttonSelectCar5);
-            Button ButtonSelectCar6 = FindViewById<Button>(Resource.Id.buttonSelectCar6);
-            Button ButtonSelectCar7 = FindViewById<Button>(Resource.Id.buttonSelectCar7);
-            Button ButtonSelectCar8 = FindViewById<Button>(Resource.Id.buttonSelectCar8);
-            Button ButtonSelectCar9 = FindViewById<Button>(Resource.Id.buttonSelectCar9);
-            Button ButtonSelectCar10 = FindViewById<Button>(Resource.Id.buttonSelectCar10);
-            Button ButtonSelectCar11 = FindViewById<Button>(Resource.Id.buttonSelectCar11);
-
-
-            #endregion
-
-            #region MySQL connection
-
-            MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
+        private void InitializeConnection()
+        {
+            connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
             connection.Open();
+        }
 
-            #endregion
+        private async Task LoadCarsAsync()
+        {
+            Car[] cars = new Car[11];
 
-            #region Cars
-
-            Car Car1 = new Car(connection, 1);
-            Car Car2 = new Car(connection, 2);
-            Car Car3 = new Car(connection, 3);
-            Car Car4 = new Car(connection, 4);
-            Car Car5 = new Car(connection, 5);
-            Car Car6 = new Car(connection, 6);
-            Car Car7 = new Car(connection, 7);
-            Car Car8 = new Car(connection, 8);
-            Car Car9 = new Car(connection, 9);
-            Car Car10 = new Car(connection, 10);
-            Car Car11 = new Car(connection, 11);
-
-
-            #endregion
-
-            #region display cars
-
-            ImageView1.SetImageDrawable(Car1.DownloadImageDrawable(Car1.GetUrl()));
-            TextViewCar1.Text = Car1.GetProducer() + " " + Car1.GetModel();
-            TextViewRange1.Text = "Range: " + Car1.GetRange() + " km";
-            ButtonSelectCar1.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView2.SetImageDrawable(Car2.DownloadImageDrawable(Car2.GetUrl()));
-            TextViewCar2.Text = Car2.GetProducer() + " " + Car2.GetModel();
-            TextViewRange2.Text = "Range: " + Car2.GetRange() + " km";
-            ButtonSelectCar2.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView3.SetImageDrawable(Car3.DownloadImageDrawable(Car3.GetUrl()));
-            TextViewCar3.Text = Car3.GetProducer() + " " + Car3.GetModel();
-            TextViewRange3.Text = "Range: " + Car3.GetRange() + " km";
-            ButtonSelectCar3.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView4.SetImageDrawable(Car4.DownloadImageDrawable(Car4.GetUrl()));
-            TextViewCar4.Text = Car4.GetProducer() + " " + Car4.GetModel();
-            TextViewRange4.Text = "Range: " + Car4.GetRange() + " km";
-            ButtonSelectCar4.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView5.SetImageDrawable(Car5.DownloadImageDrawable(Car5.GetUrl()));
-            TextViewCar5.Text = Car5.GetProducer() + " " + Car5.GetModel();
-            TextViewRange5.Text = "Range: " + Car5.GetRange() + " km";
-            ButtonSelectCar5.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView6.SetImageDrawable(Car6.DownloadImageDrawable(Car6.GetUrl()));
-            TextViewCar6.Text = Car6.GetProducer() + " " + Car6.GetModel();
-            TextViewRange6.Text = "Range: " + Car6.GetRange() + " km";
-            ButtonSelectCar6.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView7.SetImageDrawable(Car7.DownloadImageDrawable(Car7.GetUrl()));
-            TextViewCar7.Text = Car7.GetProducer() + " " + Car7.GetModel();
-            TextViewRange7.Text = "Range: " + Car7.GetRange() + " km";
-            ButtonSelectCar7.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView8.SetImageDrawable(Car8.DownloadImageDrawable(Car8.GetUrl()));
-            TextViewCar8.Text = Car8.GetProducer() + " " + Car8.GetModel();
-            TextViewRange8.Text = "Range: " + Car8.GetRange() + " km";
-            ButtonSelectCar8.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView9.SetImageDrawable(Car9.DownloadImageDrawable(Car9.GetUrl()));
-            TextViewCar9.Text = Car9.GetProducer() + " " + Car9.GetModel();
-            TextViewRange9.Text = "Range: " + Car9.GetRange() + " km";
-            ButtonSelectCar9.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView10.SetImageDrawable(Car10.DownloadImageDrawable(Car10.GetUrl()));
-            TextViewCar10.Text = Car10.GetProducer() + " " + Car10.GetModel();
-            TextViewRange10.Text = "Range: " + Car10.GetRange() + " km";
-            ButtonSelectCar10.Visibility = Android.Views.ViewStates.Visible;
-
-            ImageView11.SetImageDrawable(Car11.DownloadImageDrawable(Car11.GetUrl()));
-            TextViewCar11.Text = Car11.GetProducer() + " " + Car11.GetModel();
-            TextViewRange11.Text = "Range: " + Car11.GetRange() + " km";
-            ButtonSelectCar11.Visibility = Android.Views.ViewStates.Visible;
-
-            #endregion
-
-            #region Buttons
-
-            ButtonSelectCar1.Click += delegate
+            // Load car details asynchronously
+            for (int i = 0; i < 11; i++)
             {
-                StartActivity(typeof(MapScreen));
-            };
+                cars[i] = await new Car().LoadCarDetailsAsync(connection, i + 1);
+            }
 
-            ButtonSelectCar2.Click += delegate
+            // Display car details
+            for (int i = 0; i < 11; i++)
             {
-                StartActivity(typeof(MapScreen));
-            };
+                Car car = cars[i];
+                if (car != null)
+                {
+                    imageViews[i].SetImageDrawable(await car.DownloadImageDrawableAsync(car.GetUrl()));
+                    producerModelTextViews[i].Text = $"{car.GetProducer()} {car.GetModel()}";
+                    rangeTextViews[i].Text = $"Range: {car.GetRange()} km";
+                    selectCarButtons[i].Visibility = Android.Views.ViewStates.Visible;
 
-            ButtonSelectCar3.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
+                    int carId = car.GetId();
+                    selectCarButtons[i].Click += async delegate
+                    {
+                        // Get the user email from Android preferences
+                        ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                        string userEmail = prefs.GetString("email", "");
 
-            ButtonSelectCar4.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
+                        // Query the database to find the user ID based on the email
+                        var query = connection.CreateCommand();
+                        query.CommandText = $"SELECT id FROM uzytkownik WHERE Email = '{userEmail}'";
+                        int userId = 0; // Default value if user ID is not found
 
-            ButtonSelectCar5.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
+                        using (var reader = await query.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                userId = reader.GetInt32(0);
+                            }
+                        }
 
-            ButtonSelectCar6.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
+                        // Update the uzytkownik_samochody table with the user ID and chosen car ID
+                        var updateQuery = connection.CreateCommand();
+                        string updateQueryString = $"INSERT INTO uzytkownicy_samochody (uzytkownik_id, samochod_id) VALUES ({userId}, {carId})";
+                        updateQuery.CommandText = updateQueryString;
+                        await updateQuery.ExecuteNonQueryAsync();
 
-            ButtonSelectCar7.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
+                        // Start the Settings activity
+                        StartActivity(typeof(UserSettingsPage));
+                    };
 
-            ButtonSelectCar8.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
-
-            ButtonSelectCar9.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
-
-            ButtonSelectCar10.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
-
-            ButtonSelectCar11.Click += delegate
-            {
-                StartActivity(typeof(MapScreen));
-            };
-
-            #endregion
+                }
+            }
 
             connection.Close();
         }
+
     }
 }

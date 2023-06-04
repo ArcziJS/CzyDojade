@@ -64,29 +64,16 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="16dp" />
-    <TableLayout
+
+    <LinearLayout
+        android:id="@+id/car_section"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tableLayout1">
-        <ImageView
-            android:id="@+id/car_image"
-            android:layout_width="128dp"
-            android:layout_height="64dp"
-            android:padding="16dp"
-            android:src="@drawable/tesla_model_3_outline" />
-        <TextView
-            android:id="@+id/car_info"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/car_info"
-            android:textColor="@color/colorButtonText"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="16dp" />
-    </TableLayout >
+        android:layout_height="wrap_content">
+    </LinearLayout>
 
     <Button
+        android:id="@+id/select_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_car"
@@ -147,6 +134,7 @@
             android:textSize="18sp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"/>
+
         <TextView
             android:id="@+id/separator2"
             android:layout_width="match_parent"
@@ -206,5 +194,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
-
