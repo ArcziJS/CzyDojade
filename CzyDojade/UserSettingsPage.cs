@@ -65,6 +65,7 @@ namespace CzyDojade
             var logoutButton = FindViewById<Button>(Resource.Id.logout);
             var avatarButton = FindViewById<Button>(Resource.Id.change_avatar);
             var mapButton = FindViewById<ImageButton>(Resource.Id.menu_map);
+            var carSelectorButton = FindViewById<Button>(Resource.Id.select_car);
             #endregion
 
             #region Functionality of Buttons
@@ -97,6 +98,15 @@ namespace CzyDojade
             {
                 // Start the Map activity
                 var intent = new Intent(this, typeof(MapScreen));
+                StartActivity(intent);
+                OverridePendingTransition(0, 0);
+            };
+
+            // Define the click event handler for the 'map' button
+            carSelectorButton.Click += (sender, e) =>
+            {
+                // Start the Map activity
+                var intent = new Intent(this, typeof(CarSelector));
                 StartActivity(intent);
                 OverridePendingTransition(0, 0);
             };

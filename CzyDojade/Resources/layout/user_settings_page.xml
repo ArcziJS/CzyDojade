@@ -87,6 +87,7 @@
     </TableLayout >
 
     <Button
+        android:id="@+id/select_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_car"
