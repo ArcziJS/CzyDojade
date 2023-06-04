@@ -89,6 +89,14 @@ namespace CzyDojade
             // Get the car_section LinearLayout from the layout
             LinearLayout carSection = FindViewById<LinearLayout>(Resource.Id.car_section);
 
+            // Retrieve the active car ID from the database
+            int activeCarId;
+            using (var getActiveCarIdCommand = connection.CreateCommand())
+            {
+                getActiveCarIdCommand.CommandText = "SELECT samochod_id FROM uzytkownicy_samochody WHERE uzytkownik_id = @UserId AND is_active = true";
+                getActiveCarIdCommand.Parameters.AddWithValue("@UserId", userId);
+                activeCarId = Convert.ToInt32(getActiveCarIdCommand.ExecuteScalar());
+            }
 
             // Iterate over the list of car IDs and retrieve the car data from the database
             foreach (int carId in carIds)
@@ -101,15 +109,24 @@ namespace CzyDojade
                     {
                         if (reader.Read())
                         {
-                            // Create a new LinearLayout to hold car details
+                            // Create a new LinearLayout to hold car details and options
                             LinearLayout carLayout = new LinearLayout(this);
-                            carLayout.Orientation = Orientation.Horizontal;
+                            carLayout.Orientation = Orientation.Vertical;
                             carLayout.LayoutParameters = new LinearLayout.LayoutParams(
                                 ViewGroup.LayoutParams.MatchParent,
                                 ViewGroup.LayoutParams.WrapContent
                             );
-                            carLayout.SetPadding(16, 16, 16, 16); 
-                            carLayout.SetBackgroundColor(Color.Rgb(44, 62, 80)); 
+                            carLayout.SetPadding(16, 16, 16, 16);
+                            carLayout.SetBackgroundColor(Color.Rgb(44, 62, 80));
+
+                            // Create a LinearLayout to hold the car information and options
+                            LinearLayout carInfoOptionsLayout = new LinearLayout(this);
+                            carInfoOptionsLayout.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MatchParent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            carInfoOptionsLayout.Orientation = Orientation.Horizontal;
+                            carInfoOptionsLayout.SetPadding(16, 0, 16, 0);
 
                             // Create a LinearLayout to hold the car information
                             LinearLayout carInfoLayout = new LinearLayout(this);
@@ -118,7 +135,6 @@ namespace CzyDojade
                                 ViewGroup.LayoutParams.WrapContent
                             );
                             carInfoLayout.Orientation = Orientation.Vertical;
-                            carInfoLayout.SetPadding(16, 0, 0, 0); 
 
                             // Create a TextView for the car make and model
                             TextView carMakeModel = new TextView(this);
@@ -128,8 +144,8 @@ namespace CzyDojade
                             );
                             carMakeModel.Text = $"{reader.GetString(0)} {reader.GetString(1)}";
                             carMakeModel.SetTextAppearance(this, Android.Resource.Style.TextAppearanceMedium);
-                            carMakeModel.SetTextColor(Color.White); 
-                            carMakeModel.SetTypeface(carMakeModel.Typeface, TypefaceStyle.Bold); 
+                            carMakeModel.SetTextColor(Color.White);
+                            carMakeModel.SetTypeface(carMakeModel.Typeface, TypefaceStyle.Bold);
                             carInfoLayout.AddView(carMakeModel);
 
                             // Create a TextView for the car range
@@ -140,18 +156,87 @@ namespace CzyDojade
                             );
                             carRange.Text = $"Zasięg: {reader.GetString(2)} km";
                             carRange.SetTextAppearance(this, Android.Resource.Style.TextAppearanceSmall);
-                            carRange.SetTextColor(Color.White); 
+                            carRange.SetTextColor(Color.White);
                             carInfoLayout.AddView(carRange);
 
-                            carLayout.AddView(carInfoLayout);
+                            carInfoOptionsLayout.AddView(carInfoLayout);
+
+                            // Create a LinearLayout for the options menu
+                            LinearLayout optionsLayout = new LinearLayout(this);
+                            optionsLayout.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WrapContent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            optionsLayout.Orientation = Orientation.Horizontal;
+                            optionsLayout.SetGravity(GravityFlags.End | GravityFlags.CenterVertical);
+
+                            // Create the triple-dot menu button
+                            Button optionsButton = new Button(this);
+                            optionsButton.LayoutParameters = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WrapContent,
+                                ViewGroup.LayoutParams.WrapContent
+                            );
+                            optionsButton.Text = "⋮";
+                            optionsButton.SetTextAppearance(this, Android.Resource.Style.TextAppearanceLarge);
+                            optionsButton.SetTextColor(Color.White);
+                            optionsButton.Background = null;
+
+                            bool isActiveCar = false;
+
+                            // Add a green indication for the currently active car
+                            if (carId == activeCarId)
+                            {
+                                isActiveCar = true;
+                                carLayout.SetBackgroundColor(Color.Rgb(0, 128, 0));
+                            }
+                            else
+                            {
+                                isActiveCar = false;
+                                carLayout.SetBackgroundColor(Color.Rgb(44, 62, 80));
+                            }
+
+                            // Add click event handler for the options button
+                            optionsButton.Click += (sender, e) =>
+                            {
+                                // Create a popup menu
+                                PopupMenu popupMenu = new PopupMenu(this, optionsButton);
+                                popupMenu.MenuInflater.Inflate(Resource.Menu.car_options_menu, popupMenu.Menu);
+
+                                // Set click event handler for menu items
+                                popupMenu.MenuItemClick += (s, args) =>
+                                {
+                                    switch (args.Item.ItemId)
+                                    {
+                                        case Resource.Id.menu_set_active:
+                                            // Handle set as active option
+                                            SetCarAsActive(carId);
+                                            break;
+                                        case Resource.Id.menu_delete:
+                                            // Handle delete option
+                                            DeleteCar(carId); // Pass the carId to the DeleteCar method
+                                            break;
+                                    }
+                                };
+
+                                // Show the popup menu
+                                popupMenu.Show();
+                            };
+
+                            // Add the options button to the options layout
+                            optionsLayout.AddView(optionsButton);
+
+                            carInfoOptionsLayout.AddView(optionsLayout);
 
                             // Add margin to the carLayout
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                 ViewGroup.LayoutParams.MatchParent,
                                 ViewGroup.LayoutParams.WrapContent
                             );
-                            layoutParams.SetMargins(32, 0, 32, 16); 
+                            layoutParams.SetMargins(32, 0, 32, 16);
                             carLayout.LayoutParameters = layoutParams;
+
+                            // Add the carInfoOptionsLayout to the carLayout
+                            carLayout.AddView(carInfoOptionsLayout);
 
                             // Add the carLayout to the car_section LinearLayout
                             carSection.AddView(carLayout);
@@ -160,6 +245,54 @@ namespace CzyDojade
                 }
             }
 
+            void DeleteCar(int carId)
+            {
+                MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
+                connection.Open();
+
+                using (var deleteCommand = connection.CreateCommand())
+                {
+                    deleteCommand.CommandText = "DELETE FROM uzytkownicy_samochody WHERE uzytkownik_id = @UserId AND samochod_id = @CarId";
+                    deleteCommand.Parameters.AddWithValue("@UserId", userId);
+                    deleteCommand.Parameters.AddWithValue("@CarId", carId);
+                    deleteCommand.ExecuteNonQuery();
+                }
+            }
+
+            // Set the selected car as active and deactivate other cars owned by the user
+            void SetCarAsActive(int carId)
+            {
+                #region MySQL connection
+                MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
+                connection.Open();
+                #endregion
+
+                // Retrieve the user ID from the database using the user's email
+                int userId;
+                using (var getUserIdCommand = connection.CreateCommand())
+                {
+                    getUserIdCommand.CommandText = "SELECT id FROM uzytkownik WHERE Email = @Email";
+                    getUserIdCommand.Parameters.AddWithValue("@Email", userEmail);
+                    userId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
+                }
+
+                // Set the is_active column to false for all cars owned by the user
+                using (var deactivateCarsCommand = connection.CreateCommand())
+                {
+                    deactivateCarsCommand.CommandText = "UPDATE uzytkownicy_samochody SET is_active = false WHERE uzytkownik_id = @UserId";
+                    deactivateCarsCommand.Parameters.AddWithValue("@UserId", userId);
+                    deactivateCarsCommand.ExecuteNonQuery();
+                }
+
+                // Set the is_active column to true for the selected car
+                using (var setActiveCarCommand = connection.CreateCommand())
+                {
+                    setActiveCarCommand.CommandText = "UPDATE uzytkownicy_samochody SET is_active = true WHERE uzytkownik_id = @UserId AND samochod_id = @CarId";
+                    setActiveCarCommand.Parameters.AddWithValue("@UserId", userId);
+                    setActiveCarCommand.Parameters.AddWithValue("@CarId", carId);
+                    setActiveCarCommand.ExecuteNonQuery();
+                }
+            }
 
 
             #endregion
