@@ -65,12 +65,12 @@
         android:textStyle="bold"
         android:padding="16dp" />
 
-    <LinearLayout
+    <TableLayout
         android:id="@+id/car_section"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </LinearLayout>
+    </TableLayout>
 
     <Button
         android:id="@+id/select_car"

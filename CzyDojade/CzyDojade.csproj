@@ -61,6 +61,7 @@
     <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
@@ -141,6 +142,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Uno.UI">
+      <Version>4.8.39</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Glide">
       <Version>4.15.1.1</Version>

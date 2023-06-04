@@ -6,8 +6,16 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using Xamarin.Essentials;
+using Android;
+using Android.Content;
+using Android.Content.PM;
+using Android.Preferences;
+using AndroidX.Core.App;
+using AndroidX.Core.Content;
 
-#pragma warning disable CS0618
+
+
+
 
 namespace CzyDojade
 {
@@ -16,8 +24,10 @@ namespace CzyDojade
     {
         EditText EmailEntry;
         Button SendButton;
+        Button BackButton;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+
+    protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.restoring_password);
@@ -29,12 +39,18 @@ namespace CzyDojade
 
                 SendButton = FindViewById<Button>(Resource.Id.SendButton);
                 EmailEntry = FindViewById<EditText>(Resource.Id.EmailEntry);
+                BackButton = FindViewById<Button>(Resource.Id.BackButton_1);
 
                 SendButton.Click += ResetPasswordButton_Clicked;
             }
+
+            BackButton.Click += delegate
+            {
+                StartActivity(typeof(LoginScreen));
+            };
         }
 
-        private void ResetPasswordButton_Clicked(object sender, EventArgs e)
+    private void ResetPasswordButton_Clicked(object sender, EventArgs e)
         {
             if (!IsValidEmail(EmailEntry.Text))
             {
@@ -70,18 +86,17 @@ namespace CzyDojade
 
         private void SaveResetToken(string resetToken)
         {
-            // Zapisz resetToken w lokalnej bazie danych, na przykład w SharedPreferences lub App Properties
+            
             Preferences.Set("ResetToken", resetToken);
         }
 
         private void SendResetEmail(string emailAddress, string resetToken)
         {
-            // Wysyłanie wiadomości e-mail z linkiem resetującym hasło
-            // Możesz skorzystać z usługi zewnętrznej do wysyłania wiadomości e-mail lub użyć wbudowanych możliwości Xamarin
+            
 
-            string smtpServer = "smtp.poczta.onet.pl"; // Serwer SMTP używany do wysyłania wiadomości e-mail
-            string smtpUsername = "czydojade"; // Nazwa użytkownika SMTP
-            string smtpPassword = "CzyDojade123!"; // Hasło SMTP
+            string smtpServer = "smtp.poczta.onet.pl"; 
+            string smtpUsername = "czydojade"; 
+            string smtpPassword = "CzyDojade123!"; 
 
             try
             {
@@ -93,9 +108,9 @@ namespace CzyDojade
                 mail.Subject = "Resetowanie hasła";
                 mail.Body = $"Kliknij poniższy link, aby zresetować hasło: {resetToken}";
 
-                smtpClient.Port = 465; // Port SMTP
+                smtpClient.Port = 465; 
                 smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                smtpClient.EnableSsl = true; // Włącz SSL, jeśli wymagane
+                smtpClient.EnableSsl = true; 
 
                 smtpClient.Send(mail);
             }
