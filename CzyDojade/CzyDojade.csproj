@@ -143,6 +143,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
+    <PackageReference Include="Postmark">
+      <Version>4.7.7</Version>
+    </PackageReference>
     <PackageReference Include="Uno.UI">
       <Version>4.8.39</Version>
     </PackageReference>

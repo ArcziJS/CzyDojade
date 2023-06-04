@@ -13,10 +13,6 @@ using Android.Preferences;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 
-
-
-
-
 namespace CzyDojade
 {
     [Activity(Label = "RestoringPassword")]
@@ -95,7 +91,7 @@ namespace CzyDojade
             
 
             string smtpServer = "smtp.poczta.onet.pl"; 
-            string smtpUsername = "czydojade"; 
+            string smtpUsername = "czydojade@onet.pl"; 
             string smtpPassword = "CzyDojade123!"; 
 
             try
