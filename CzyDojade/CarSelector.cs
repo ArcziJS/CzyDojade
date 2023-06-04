@@ -3,6 +3,9 @@ using Android.OS;
 using Android.Widget;
 using MySqlConnector;
 using System.Threading.Tasks;
+using Android.Content;
+using Android.Preferences;
+
 
 namespace CzyDojade
 {
@@ -80,10 +83,42 @@ namespace CzyDojade
                     producerModelTextViews[i].Text = $"{car.GetProducer()} {car.GetModel()}";
                     rangeTextViews[i].Text = $"Range: {car.GetRange()} km";
                     selectCarButtons[i].Visibility = Android.Views.ViewStates.Visible;
+
+                    int carId = car.GetId();
+                    selectCarButtons[i].Click += async delegate
+                    {
+                        // Get the user email from Android preferences
+                        ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                        string userEmail = prefs.GetString("email", "");
+
+                        // Query the database to find the user ID based on the email
+                        var query = connection.CreateCommand();
+                        query.CommandText = $"SELECT id FROM uzytkownik WHERE Email = '{userEmail}'";
+                        int userId = 0; // Default value if user ID is not found
+
+                        using (var reader = await query.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                userId = reader.GetInt32(0);
+                            }
+                        }
+
+                        // Update the uzytkownik_samochody table with the user ID and chosen car ID
+                        var updateQuery = connection.CreateCommand();
+                        string updateQueryString = $"INSERT INTO uzytkownicy_samochody (uzytkownik_id, samochod_id) VALUES ({userId}, {carId})";
+                        updateQuery.CommandText = updateQueryString;
+                        await updateQuery.ExecuteNonQueryAsync();
+
+                        // Start the Settings activity
+                        StartActivity(typeof(UserSettingsPage));
+                    };
+
                 }
             }
 
             connection.Close();
         }
+
     }
 }
