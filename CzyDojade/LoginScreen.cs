@@ -1,8 +1,12 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Preferences;
 using Android.Widget;
+using AndroidX.Core.App;
+using AndroidX.Core.Content;
 using MySqlConnector;
 using System;
 
@@ -20,6 +24,11 @@ namespace CzyDojade
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.login_screen);
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadPhoneState) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.ReadPhoneState }, 1);
+            }
 
             MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
             connection.Open();

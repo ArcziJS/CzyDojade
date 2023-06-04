@@ -48,12 +48,13 @@ namespace CzyDojade
             mapView = FindViewById<MapView>(Resource.Id.mapView);
             mapView.OnCreate(savedInstanceState);
             mapView.GetMapAsync(this);
-
-            //get access to android location, that will later be used to get current gps location
             LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
-            Criteria criteria = new Criteria();
-            string provider = locationManager.GetBestProvider(criteria, false);
-            Location location = locationManager.GetLastKnownLocation(provider);
+            string provider = locationManager.GetBestProvider(new Criteria(), true);
+
+            if (provider != null)
+            {
+                Location location = locationManager.GetLastKnownLocation(provider);
+            }
 
         }
 
@@ -383,7 +384,7 @@ namespace CzyDojade
 
                 foreach (var option in routeOptions)
                 {
-                    var url = $"{baseUrl}/mapbox/{option}/{routeStart.Longitude},{routeStart.Latitude};{routeEnd.Longitude},{routeEnd.Latitude}.json?access_token={accessToken}";
+                    var url = $"{baseUrl}/mapbox/{option}/{routeStart.Longitude.ToString().Replace(',','.')},{routeStart.Latitude.ToString().Replace(',', '.')};{routeEnd.Longitude.ToString().Replace(',', '.')},{routeEnd.Latitude.ToString().Replace(',', '.')}.json?access_token={accessToken}";
 
                     using (var httpClient = new HttpClient())
                     {
