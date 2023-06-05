@@ -13,6 +13,10 @@ using Android.Preferences;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 
+
+
+
+
 namespace CzyDojade
 {
     [Activity(Label = "RestoringPassword")]
@@ -86,27 +90,22 @@ namespace CzyDojade
             Preferences.Set("ResetToken", resetToken);
         }
 
-        private void SendResetEmail(string emailAddress, string resetToken)
+        private void SendResetEmail(string EmailEntry, string resetToken)
         {
             
-
-            string smtpServer = "smtp.poczta.onet.pl"; 
-            string smtpUsername = "czydojade@onet.pl"; 
-            string smtpPassword = "CzyDojade123!"; 
-
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient smtpClient = new SmtpClient(smtpServer);
+                SmtpClient smtpClient = new SmtpClient("smtp-relay.sendinblue.com");
 
-                mail.From = new MailAddress(smtpUsername);
-                mail.To.Add(emailAddress);
+                mail.From = new MailAddress("staryszpaka@gmail.com");
+                mail.To.Add(EmailEntry);
                 mail.Subject = "Resetowanie hasła";
                 mail.Body = $"Kliknij poniższy link, aby zresetować hasło: {resetToken}";
 
-                smtpClient.Port = 465; 
-                smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                smtpClient.EnableSsl = true; 
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential("staryszpaka@gmail.com", "CzyDojade123");
+                smtpClient.EnableSsl = true;
 
                 smtpClient.Send(mail);
             }
