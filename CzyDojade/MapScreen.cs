@@ -2,6 +2,7 @@
 using Android.Graphics;
 using Android.Locations;
 using Android.OS;
+using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Com.Mapbox.Core.Constants;
@@ -32,8 +33,9 @@ namespace CzyDojade
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
         List<Polyline> polylines = new List<Polyline>();
-        Dictionary<long, Tuple<Marker, Polyline>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline>>();
+        Dictionary<long, Tuple<Marker, Polyline, Route>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline, Route>>();
 
+        int selectedCarRange = 350;
         int evChargesNeeded;
         int maxMarkerCount = 2;
 
@@ -94,7 +96,8 @@ namespace CzyDojade
                 }
             };
 
-
+            LinearLayout routeInfoLayout = FindViewById<LinearLayout>(Resource.Id.routeInfoLayout);
+            routeInfoLayout.Visibility = ViewStates.Gone;
             TextView routeLengthTextView = FindViewById<TextView>(Resource.Id.routeLengthTextView);
             TextView evChargesTextView = FindViewById<TextView>(Resource.Id.evChargesTextView);
 
@@ -402,10 +405,11 @@ namespace CzyDojade
 
                                 double routeLengthKm = currentRoute.Distance / 1000;
 
-                                evChargesNeeded = (int)Math.Ceiling(routeLengthKm / 350);
+                                evChargesNeeded = (int)Math.Floor(routeLengthKm / 350);
 
                                 routeLengthTextView.Text = $"{routeLengthKm:F2} km";
                                 evChargesTextView.Text = $"{evChargesNeeded}";
+
 
                                 int middlePointIndex = points.Count / 2;
                                 LatLng middlePoint = points[middlePointIndex];
@@ -430,7 +434,7 @@ namespace CzyDojade
                                 Polyline polyline = mapboxMap.AddPolyline(routePolylineOptions);
                                 polylines.Add(polyline);
 
-                                markersRoutes.Add(marker.Id, new Tuple<Marker, Polyline>(marker, polyline));
+                                markersRoutes.Add(marker.Id, new Tuple<Marker, Polyline, Route>(marker, polyline, currentRoute));
                             }
                         }
                         else
@@ -446,9 +450,18 @@ namespace CzyDojade
                 mapboxMap.MarkerClick += async delegate (object sender, MarkerClickEventArgs e)
                 {
                     var selectedMarker = e.P0;
-                    Tuple<Marker, Polyline> pair = markersRoutes[selectedMarker.Id];
+                    Tuple<Marker, Polyline, Route> pair = markersRoutes[selectedMarker.Id];
                     Marker chosenMarker = pair.Item1;
                     Polyline chosenPolyline = pair.Item2;
+                    Route choosenRoute = pair.Item3;
+
+                    double choosenRouteLengthKm = Math.Ceiling(choosenRoute.Distance / 1000);
+
+                    int evChargesNeeded = (int)Math.Floor(choosenRouteLengthKm / selectedCarRange);
+
+                    routeInfoLayout.Visibility = ViewStates.Visible;
+                    routeLengthTextView.Text = $"{choosenRouteLengthKm:F2} km";
+                    evChargesTextView.Text = $"{evChargesNeeded}";
 
                     string markerId = selectedMarker.Id.ToString();
 
