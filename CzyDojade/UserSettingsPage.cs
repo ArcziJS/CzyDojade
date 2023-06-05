@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+//using Windows.UI.Xaml.Controls;
 
 #pragma warning disable CS0618
 
@@ -210,10 +211,12 @@ namespace CzyDojade
                                         case Resource.Id.menu_set_active:
                                             // Handle set as active option
                                             SetCarAsActive(carId);
+                                            StartActivity(typeof(UserSettingsPage));
                                             break;
                                         case Resource.Id.menu_delete:
                                             // Handle delete option
                                             DeleteCar(carId); // Pass the carId to the DeleteCar method
+                                            StartActivity(typeof(UserSettingsPage));
                                             break;
                                     }
                                 };
@@ -332,6 +335,23 @@ namespace CzyDojade
             // Define the click event handler for the 'map' button
             mapButton.Click += (sender, e) =>
             {
+                int activeCarRange;
+                //using (var getActiveCarIdCommand = connection.CreateCommand())
+                //{
+                //    getActiveCarIdCommand.CommandText = "SELECT samochod_id FROM uzytkownicy_samochody WHERE uzytkownik_id = @UserId AND is_active = true";
+                //    getActiveCarIdCommand.Parameters.AddWithValue("@UserId", userId);
+                //    activeCarId = Convert.ToInt32(getActiveCarIdCommand.ExecuteScalar());
+                //}
+                using (var getCarRangeCommand = connection.CreateCommand())
+                {
+                    getCarRangeCommand.CommandText = "SELECT zasieg FROM samochody WHERE id = @CarId";
+                    getCarRangeCommand.Parameters.AddWithValue("@CarId", activeCarId);
+                    activeCarRange = Convert.ToInt32(getCarRangeCommand.ExecuteScalar());
+                }
+
+                    ISharedPreferencesEditor editor = prefs.Edit();
+                editor.PutInt("range", activeCarRange);
+                editor.Commit();
                 // Start the Map activity
                 var intent = new Intent(this, typeof(MapScreen));
                 StartActivity(intent);

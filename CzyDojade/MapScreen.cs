@@ -1,7 +1,9 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.Locations;
 using Android.OS;
+using Android.Preferences;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
@@ -35,7 +37,9 @@ namespace CzyDojade
         List<Polyline> polylines = new List<Polyline>();
         Dictionary<long, Tuple<Marker, Polyline, Route>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline, Route>>();
 
-        int selectedCarRange = 350;
+
+        
+        int selectedCarRange;
         int evChargesNeeded;
         int maxMarkerCount = 2;
 
@@ -46,6 +50,9 @@ namespace CzyDojade
             Com.Mapbox.Mapboxsdk.Mapbox.GetInstance(this, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
 
             SetContentView(Resource.Layout.map_screen);
+
+            ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+            selectedCarRange = prefs.GetInt("range", 350);
 
             mapView = FindViewById<MapView>(Resource.Id.mapView);
             mapView.OnCreate(savedInstanceState);
@@ -298,6 +305,8 @@ namespace CzyDojade
 
             void MoveCamera(LatLng position)
             {
+                LinearLayout routeInfoLayout = FindViewById<LinearLayout>(Resource.Id.routeInfoLayout);
+                routeInfoLayout.Visibility = ViewStates.Gone;
                 ClearPolylines();
                 ResetCameraAngle();
                 mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(position, 15), 5000);
@@ -306,6 +315,7 @@ namespace CzyDojade
 
             void MoveCameraBetween(LatLng position1, LatLng position2)
             {
+
                 ClearPolylines();
                 ResetCameraAngle();
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -365,6 +375,7 @@ namespace CzyDojade
 
             async Task GetRoute(LatLng routeStart, LatLng routeEnd)
             {
+                routeInfoLayout.Visibility = ViewStates.Gone;
                 ClearPolylines();
                 ClearMarkers();
                 CreateMarker(routeStart);
