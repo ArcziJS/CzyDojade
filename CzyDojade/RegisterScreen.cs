@@ -1,5 +1,7 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.OS;
+using Android.Preferences;
 using Android.Widget;
 using MySqlConnector;
 
@@ -8,10 +10,11 @@ namespace CzyDojade
     [Activity(Label = "RegisterScreen")]
     public class RegisterScreen : Activity
     {
+        private ISharedPreferences prefs;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             SetContentView(Resource.Layout.register_screen);
 
             #region MySQL connection
@@ -49,7 +52,13 @@ namespace CzyDojade
                 command.Parameters.AddWithValue("@email", Email.Text);
                 command.Parameters.AddWithValue("@password", Password.Text);
                 command.ExecuteNonQuery();
-                StartActivity(typeof(CarSelector));
+
+                ISharedPreferencesEditor editor = prefs.Edit();
+                editor.PutBoolean("loggedIn", true);
+                editor.PutString("email", Email.Text);
+                editor.Commit();
+
+                StartActivity(typeof(UserSettingsPage));
             };
             #endregion
 
