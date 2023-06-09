@@ -25,6 +25,8 @@ namespace CzyDojade
 
             SetContentView(Resource.Layout.login_screen);
 
+            RequestedOrientation = ScreenOrientation.Portrait;
+
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadPhoneState) != Permission.Granted)
             {
                 ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.ReadPhoneState }, 1);

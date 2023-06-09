@@ -5,7 +5,7 @@ using MySqlConnector;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Preferences;
-
+using Android.Content.PM;
 
 namespace CzyDojade
 {
@@ -23,6 +23,8 @@ namespace CzyDojade
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.car_selection);
+
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             InitializeViews();
             InitializeConnection();

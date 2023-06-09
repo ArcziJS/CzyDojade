@@ -32,6 +32,8 @@ namespace CzyDojade
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.restoring_password);
 
+            RequestedOrientation = ScreenOrientation.Portrait;
+
             string connectionString = "Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {

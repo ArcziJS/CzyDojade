@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Preferences;
 using Android.Widget;
@@ -16,6 +17,8 @@ namespace CzyDojade
             base.OnCreate(savedInstanceState);
             prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             SetContentView(Resource.Layout.register_screen);
+
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             #region MySQL connection
             MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");

@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.Locations;
 using Android.OS;
@@ -50,6 +51,8 @@ namespace CzyDojade
             Com.Mapbox.Mapboxsdk.Mapbox.GetInstance(this, "pk.eyJ1IjoiY3p5ZG9qYWRlIiwiYSI6ImNsZ3k5MjBscTA3NTUzZnBlZ3VoYXYxMGIifQ.Gh80YFg9RRgTbG9WbxvPPQ");
 
             SetContentView(Resource.Layout.map_screen);
+
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             selectedCarRange = prefs.GetInt("range", 350);
