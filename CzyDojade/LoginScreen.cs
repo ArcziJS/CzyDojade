@@ -40,7 +40,6 @@ namespace CzyDojade
             Button ButtonLogin = FindViewById<Button>(Resource.Id.ButtonLogin1);
             Button ButtonLogin2 = FindViewById<Button>(Resource.Id.ButtonLogin2);
             Button ButtonLogin3 = FindViewById<Button>(Resource.Id.ButtonLogin3);
-            Button ButtonLogin6 = FindViewById<Button>(Resource.Id.ButtonLogin6);
             EditText Email = FindViewById<EditText>(Resource.Id.Email);
             EditText Password = FindViewById<EditText>(Resource.Id.Password);
 
@@ -65,11 +64,6 @@ namespace CzyDojade
                 {
                     Toast.MakeText(this, "Wrong email or password. Please try again.", ToastLength.Short).Show();
                 }
-            };
-
-            ButtonLogin6.Click += delegate
-            {
-                StartActivity(typeof(CarSelector));
             };
 
             ButtonLogin2.Click += delegate
