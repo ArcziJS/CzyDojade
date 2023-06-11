@@ -5,6 +5,7 @@ using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Preferences;
+using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
@@ -29,17 +30,16 @@ using static Com.Mapbox.Mapboxsdk.Maps.MapboxMap;
 namespace CzyDojade
 {
     [Activity(Label = "Activity1")]
-    public class MapScreen : Activity, IOnMapReadyCallback
+    public class MapScreen : Activity, IOnMapReadyCallback, ILocationListener
     {
         MapView mapView;
+        LatLng currentLocation;
         LatLng routeStart;
         LatLng routeEnd;
         List<Marker> markers = new List<Marker>();
         List<Polyline> polylines = new List<Polyline>();
         Dictionary<long, Tuple<Marker, Polyline, Route>> markersRoutes = new Dictionary<long, Tuple<Marker, Polyline, Route>>();
 
-
-        
         int selectedCarRange;
         int evChargesNeeded;
         int maxMarkerCount = 2;
@@ -63,11 +63,62 @@ namespace CzyDojade
             LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
             string provider = locationManager.GetBestProvider(new Criteria(), true);
 
+
             if (provider != null)
             {
                 Location location = locationManager.GetLastKnownLocation(provider);
+                if (location != null && mapView != null)
+                {
+                    currentLocation = new LatLng(location.Latitude, location.Longitude);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .Target(currentLocation)
+                        .Zoom(15)
+                        .Build();
+
+                    mapView.GetMapAsync(this);
+                    void OnMapReady(MapboxMap mapboxMap)
+                    {
+                        mapboxMap?.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
+                    }
+                }
+
+
+                locationManager.RequestLocationUpdates(provider, 1000, 10, this);
             }
 
+        }
+
+        public void OnLocationChanged(Location location)
+        {
+            if (location != null)
+            {
+                currentLocation = new LatLng(location.Latitude, location.Longitude);
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .Target(currentLocation)
+                    .Zoom(15)
+                    .Build();
+
+                mapView.GetMapAsync(this);
+                void OnMapReady(MapboxMap mapboxMap)
+                {
+                    mapboxMap?.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
+                }
+            }
+        }
+
+        public void OnProviderDisabled(string provider)
+        {
+            // This method will be called when the location provider is disabled
+        }
+
+        public void OnProviderEnabled(string provider)
+        {
+            // This method will be called when the location provider is enabled
+        }
+
+        public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
+        {
+            // This method will be called when the location provider status changes
         }
 
         public void OnMapReady(MapboxMap mapboxMap)
@@ -82,12 +133,14 @@ namespace CzyDojade
                 mapboxMap.SetStyle(new Style.Builder().FromUrl("mapbox://styles/czydojade/clic6mo3l000701qv4gvhg52k"));
             }
 
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                .Target(new LatLng(53.123326, 23.08638))
-                .Zoom(18)
-                .Build();
+            if (currentLocation != null)
+            {
+                // Move the camera to the current location
+                mapboxMap.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(currentLocation, 15), 5000);
 
-            mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition), 5000);
+                // Create a marker at the current location
+                CreateMarker(currentLocation);
+            }
 
             #region Return to current gps location button   
             //use floating action button with id returnToMyLocation to return to current gps location
@@ -360,6 +413,8 @@ namespace CzyDojade
 
             void CreateMarker(LatLng position)
             {
+                ClearMarkers(); 
+
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.SetPosition(position);
                 markerOptions.SetSnippet(null);
@@ -415,7 +470,7 @@ namespace CzyDojade
 
                 foreach (var option in routeOptions)
                 {
-                    var url = $"{baseUrl}/mapbox/{option}/{routeStart.Longitude.ToString().Replace(',','.')},{routeStart.Latitude.ToString().Replace(',', '.')};{routeEnd.Longitude.ToString().Replace(',', '.')},{routeEnd.Latitude.ToString().Replace(',', '.')}.json?access_token={accessToken}";
+                    var url = $"{baseUrl}/mapbox/{option}/{routeStart.Longitude.ToString().Replace(',', '.')},{routeStart.Latitude.ToString().Replace(',', '.')};{routeEnd.Longitude.ToString().Replace(',', '.')},{routeEnd.Latitude.ToString().Replace(',', '.')}.json?access_token={accessToken}";
 
                     using (var httpClient = new HttpClient())
                     {
@@ -474,7 +529,7 @@ namespace CzyDojade
                                     .InvokeColor(getRandomColor())
                                     .InvokeWidth(5);
 
-                                
+
                                 foreach (var point in points)
                                 {
                                     routePolylineOptions.Add(new LatLng(point.Latitude * 10, point.Longitude * 10));
