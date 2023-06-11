@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Preferences;
@@ -28,6 +29,7 @@ namespace CzyDojade
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.user_settings_page);
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             // Retrieve the email address of the logged-in user from shared preferences
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);

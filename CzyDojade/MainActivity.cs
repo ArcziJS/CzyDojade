@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
@@ -16,6 +17,8 @@ namespace CzyDojade
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.main_screen);
+
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             ImageButton selectCarButton = FindViewById<ImageButton>(Resource.Id.SelectCarButton);
 
