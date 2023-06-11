@@ -116,6 +116,11 @@ namespace CzyDojade
             AutoCompleteTextView searchViewSource = FindViewById<AutoCompleteTextView>(Resource.Id.searchViewSource);
             AutoCompleteTextView searchViewDestination = FindViewById<AutoCompleteTextView>(Resource.Id.searchViewDestination);
 
+
+            Button searchButtonSource = FindViewById<Button>(Resource.Id.searchButtonSource);
+            Button searchButtonDestination = FindViewById<Button>(Resource.Id.searchButtonDestination);
+            searchButtonDestination.Enabled = false;
+
             searchViewSource.TextChanged += async (sender, e) =>
             {
                 string query = searchViewSource.Text;
@@ -185,6 +190,15 @@ namespace CzyDojade
             {
                 string query = searchViewDestination.Text;
 
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    searchButtonDestination.Enabled = false;
+                }
+                else
+                {
+                    searchButtonDestination.Enabled = true;
+                }
+
                 JObject response = await Geocoding.ForwardGeocodeAsync(query, languages: new string[] { "pl" });
 
                 JArray features = (JArray)response["features"];
@@ -192,6 +206,7 @@ namespace CzyDojade
 
                 ArrayAdapter adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, suggestions);
                 searchViewDestination.Adapter = adapter;
+
             };
 
             searchViewDestination.ItemClick += async (sender, args) =>
@@ -247,8 +262,6 @@ namespace CzyDojade
             };
 
 
-            Button searchButtonSource = FindViewById<Button>(Resource.Id.searchButtonSource);
-            Button searchButtonDestination = FindViewById<Button>(Resource.Id.searchButtonDestination);
 
             searchButtonSource.Click += async (sender, args) =>
             {
@@ -346,6 +359,7 @@ namespace CzyDojade
             {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.SetPosition(position);
+                markerOptions.SetSnippet(null);
 
                 IconFactory iconFactory = IconFactory.GetInstance(this);
                 Icon icon = iconFactory.DefaultMarker();
@@ -428,16 +442,36 @@ namespace CzyDojade
 
                                 MarkerOptions markerOptions = (MarkerOptions)new MarkerOptions()
                                     .SetPosition(middlePoint)
-                                    .SetTitle($"{Math.Ceiling(currentRoute.Duration / 60)} min")
                                     .SetSnippet($"{Math.Floor(routeLengthKm)} km")
                                     .SetIcon(icon);
+
+                                double routeDuration = Math.Ceiling(currentRoute.Duration / 60);
+                                int routeDurationHours = (int)routeDuration / 60;
+                                int routeDurationMinutes = (int)routeDuration - 60 * routeDurationHours;
+                                if (routeDurationHours > 0)
+                                {
+                                    if (routeDurationMinutes > 0)
+                                    {
+                                        markerOptions.SetTitle($"{routeDurationHours} h {routeDurationMinutes} min");
+                                    }
+                                    else
+                                    {
+                                        markerOptions.SetTitle($"{routeDurationHours} h");
+                                    }
+                                }
+                                else
+                                {
+                                    markerOptions.SetTitle($"{routeDurationMinutes} min");
+                                }
 
                                 Marker marker = mapboxMap.AddMarker(markerOptions);
                                 markers.Add(marker);
 
                                 PolylineOptions routePolylineOptions = new PolylineOptions()
-                                    .InvokeColor(Color.Blue)
+                                    .InvokeColor(getRandomColor())
                                     .InvokeWidth(5);
+
+                                
                                 foreach (var point in points)
                                 {
                                     routePolylineOptions.Add(new LatLng(point.Latitude * 10, point.Longitude * 10));
@@ -461,81 +495,84 @@ namespace CzyDojade
                 mapboxMap.MarkerClick += async delegate (object sender, MarkerClickEventArgs e)
                 {
                     var selectedMarker = e.P0;
-                    Tuple<Marker, Polyline, Route> pair = markersRoutes[selectedMarker.Id];
-                    Marker chosenMarker = pair.Item1;
-                    Polyline chosenPolyline = pair.Item2;
-                    Route choosenRoute = pair.Item3;
-
-                    double choosenRouteLengthKm = Math.Ceiling(choosenRoute.Distance / 1000);
-
-                    int evChargesNeeded = (int)Math.Floor(choosenRouteLengthKm / selectedCarRange);
-
-                    routeInfoLayout.Visibility = ViewStates.Visible;
-                    routeLengthTextView.Text = $"{choosenRouteLengthKm:F2} km";
-                    evChargesTextView.Text = $"{evChargesNeeded}";
-
-                    string markerId = selectedMarker.Id.ToString();
-
-                    try
+                    if (markersRoutes.ContainsKey(selectedMarker.Id))
                     {
-                        if (lastPressedMarkerId != markerId)
-                        {
-                            lastPressedMarkerId = markerId;
-                            markerPressCount.Clear();
-                        }
+                        Tuple<Marker, Polyline, Route> pair = markersRoutes[selectedMarker.Id];
+                        Marker chosenMarker = pair.Item1;
+                        Polyline chosenPolyline = pair.Item2;
+                        Route choosenRoute = pair.Item3;
 
-                        if (!markerPressCount.ContainsKey(markerId))
+                        double choosenRouteLengthKm = Math.Ceiling(choosenRoute.Distance / 1000);
+
+                        int evChargesNeeded = (int)Math.Floor(choosenRouteLengthKm / selectedCarRange);
+
+                        routeInfoLayout.Visibility = ViewStates.Visible;
+                        routeLengthTextView.Text = $"{choosenRouteLengthKm:F2} km";
+                        evChargesTextView.Text = $"{evChargesNeeded}";
+
+                        string markerId = selectedMarker.Id.ToString();
+
+                        try
                         {
-                            markerPressCount[markerId] = 1;
-                        }
-                        else
-                        {
-                            markerPressCount[markerId]++;
-                            if (markerPressCount[markerId] % 2 == 0)
+                            if (lastPressedMarkerId != markerId)
                             {
-                                ClearPolylines();
-                                ClearMarkers();
-                                try
-                                {
-                                    PolylineOptions polylineOptions = new PolylineOptions()
-                                        .InvokeColor(Color.Blue)
-                                        .InvokeWidth(5);
+                                lastPressedMarkerId = markerId;
+                                markerPressCount.Clear();
+                            }
 
-                                    foreach (var point in chosenPolyline.Points)
+                            if (!markerPressCount.ContainsKey(markerId))
+                            {
+                                markerPressCount[markerId] = 1;
+                            }
+                            else
+                            {
+                                markerPressCount[markerId]++;
+                                if (markerPressCount[markerId] % 2 == 0)
+                                {
+                                    ClearPolylines();
+                                    ClearMarkers();
+                                    try
                                     {
-                                        polylineOptions.Add(new LatLng(point.Latitude, point.Longitude));
+                                        PolylineOptions polylineOptions = new PolylineOptions()
+                                            .InvokeColor(Color.Blue)
+                                            .InvokeWidth(5);
+
+                                        foreach (var point in chosenPolyline.Points)
+                                        {
+                                            polylineOptions.Add(new LatLng(point.Latitude, point.Longitude));
+                                        }
+
+                                        Polyline selectedRoute = mapboxMap.AddPolyline(polylineOptions);
+                                        polylines.Add(selectedRoute);
+
+                                        double bearing = BearingCalculator.CalculateBearing(routeStart, chosenPolyline.Points[1]);
+
+                                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                            .Target(routeStart)
+                                            .Tilt(45.0)
+                                            .Zoom(18.0)
+                                            .Bearing(bearing)
+                                            .Build();
+
+                                        mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
                                     }
-
-                                    Polyline selectedRoute = mapboxMap.AddPolyline(polylineOptions);
-                                    polylines.Add(selectedRoute);
-
-                                    double bearing = BearingCalculator.CalculateBearing(routeStart, chosenPolyline.Points[1]);
-
-                                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .Target(routeStart)
-                                        .Tilt(45.0)
-                                        .Zoom(18.0)
-                                        .Bearing(bearing)
-                                        .Build();
-
-                                    mapboxMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
-                                }
-                                catch (Exception ex)
-                                {
-                                    Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
-                                    await GetRoute(routeStart, routeEnd);
+                                    catch (Exception ex)
+                                    {
+                                        Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
+                                        await GetRoute(routeStart, routeEnd);
+                                    }
                                 }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
-                        await GetRoute(routeStart, routeEnd);
-                    }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(this, "Wybierz trasę.", ToastLength.Short).Show();
+                            await GetRoute(routeStart, routeEnd);
+                        }
 
 
-                    mapboxMap.SelectMarker(chosenMarker);
+                        mapboxMap.SelectMarker(chosenMarker);
+                    }
                 };
             }
 
@@ -566,6 +603,12 @@ namespace CzyDojade
         {
             base.OnSaveInstanceState(outState);
             mapView.OnSaveInstanceState(outState);
+        }
+
+        Color getRandomColor()
+        {
+            Random random = new Random();
+            return Color.Argb(255, random.Next(256), random.Next(256), random.Next(256));
         }
     }
 }
