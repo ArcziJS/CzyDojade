@@ -27,10 +27,7 @@ namespace CzyDojade
 
             RequestedOrientation = ScreenOrientation.Portrait;
 
-            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadPhoneState) != Permission.Granted)
-            {
-                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.ReadPhoneState }, 1);
-            }
+           
 
             MySqlConnection connection = new MySqlConnection("Server=db4free.net;Port=3306;Database=czy_dojade;Uid=czy_dojade;Pwd=czy_dojade;");
             connection.Open();

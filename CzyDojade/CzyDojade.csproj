@@ -43,6 +43,13 @@
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n>West</MandroidI18n>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+    <AndroidSupportedAbis />
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\artur\AppData\Local\Xamarin\Mono for Android\Keystore\CzyDojade\CzyDojade.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>CzyDojade</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>CzyDojade</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>CzyDojade</AndroidSigningKeyPass>
+    <AndroidApkSignerAdditionalArguments>CzyDojade</AndroidApkSignerAdditionalArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
