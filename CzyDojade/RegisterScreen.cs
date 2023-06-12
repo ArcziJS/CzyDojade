@@ -42,6 +42,23 @@ namespace CzyDojade
 
             ButtonRegister.Click += delegate
             {
+                if (string.IsNullOrWhiteSpace(Email.Text) || !IsValidEmail(Email.Text)) // Check if email is valid
+                {
+                    Toast.MakeText(this, "Please enter a valid email address", ToastLength.Short).Show();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Username.Text)) // Check if username is entered
+                {
+                    Toast.MakeText(this, "Please enter a username", ToastLength.Short).Show();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Password.Text) || string.IsNullOrWhiteSpace(ConfirmPassword.Text)) // Check if passwords are entered
+                {
+                    Toast.MakeText(this, "Please enter both password and confirm password", ToastLength.Short).Show();
+                    return;
+                }
                 if (Password.Text != ConfirmPassword.Text) // Check if passwords match
                 {
                     Toast.MakeText(this, "Passwords don't match", ToastLength.Short).Show();
@@ -64,7 +81,18 @@ namespace CzyDojade
                 StartActivity(typeof(UserSettingsPage));
             };
             #endregion
-
+            bool IsValidEmail(string email)
+            {
+                try
+                {
+                    var addr = new System.Net.Mail.MailAddress(email);
+                    return addr.Address == email;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
     }
 }

@@ -75,6 +75,8 @@ namespace CzyDojade
                         .Zoom(15)
                         .Build();
 
+                    routeStart = currentLocation;
+
                     mapView.GetMapAsync(this);
                     void OnMapReady(MapboxMap mapboxMap)
                     {
@@ -97,6 +99,8 @@ namespace CzyDojade
                     .Target(currentLocation)
                     .Zoom(15)
                     .Build();
+
+                
 
                 mapView.GetMapAsync(this);
                 void OnMapReady(MapboxMap mapboxMap)
